@@ -9,3 +9,6 @@ router.get('/:id', validarUsuarioId, obtenerUsuario)
 router.post('/', validarUsuario, usuariosController.crearUsuario)
 router.put('/:id', validarUsuarioId, validarUsuario, usuariosController.editarUsuario)
 router.delete('/:id', validarUsuarioId, usuariosController.eliminarUsuario)
+
+
+module.exports = router

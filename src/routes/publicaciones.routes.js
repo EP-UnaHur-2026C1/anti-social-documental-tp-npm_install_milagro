@@ -9,3 +9,6 @@ router.get('/:id', validarPublicacionId, obtenerPublicacion)
 router.post('/', validarPublicacion, publicacionesController.crearPublicacion)
 router.put('/:id', validarPublicacionId, validarProducto, publicacionesController.editarPublicacion)
 router.delete('/:id', validarPublicacionId, publicacionesController.eliminarPublicacion)
+
+
+module.exports = router

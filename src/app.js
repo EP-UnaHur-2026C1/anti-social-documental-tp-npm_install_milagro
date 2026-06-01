@@ -4,8 +4,8 @@ const db = require('./models')
 require("dotenv").config()
 
 // Importacion de los routers
-//const routerProductos = require('./routes/productos.routes')
-//const routerCategoria = require('./routes/categorias.routes')
+const routerPublicaciones = require('./routes/publicaciones.routes')
+const routerUsuarios = require('./routes/usuarios.routes')
 //const routerEtiqueta = require('./routes/etiquetas.routes')
 
 const PORT = process.env.PORT || 3000
@@ -14,8 +14,8 @@ const PORT = process.env.PORT || 3000
 app.use(express.json())
 
 //Le agregamos a app los routers con prefijos
-//app.use('/productos',  routerProductos)
-//app.use('/categorias', routerCategoria)
+app.use('/publicaciones',  routerPublicaciones)
+app.use('/usuarios', routerUsuarios)
 //app.use('/etiquetas', routerEtiqueta)
 
 app.listen(PORT, async () =>{

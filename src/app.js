@@ -7,6 +7,7 @@ require("dotenv").config()
 const routerPublicaciones = require('./routes/publicaciones.routes')
 const routerUsuarios = require('./routes/usuarios.routes')
 const routerEtiqueta = require('./routes/etiquetas.routes')
+const routerComentarios = require('./routes/comentarios.routes')
 
 const PORT = process.env.PORT || 3000
 
@@ -16,6 +17,7 @@ app.use(express.json())
 app.use('/publicaciones', routerPublicaciones)
 app.use('/usuarios', routerUsuarios)
 app.use('/etiquetas', routerEtiqueta)
+app.use('/comentarios', routerComentarios)
 
 app.listen(PORT, async () =>{
     await db.sequelize.sync()

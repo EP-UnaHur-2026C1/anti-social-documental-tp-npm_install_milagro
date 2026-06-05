@@ -1,7 +1,11 @@
 const { Router } = require('express')
 const usuariosController = require('../controllers/usuarios.controllers')
-const validarUsuario = require('../middlewares/validarUsuario')
-const validarUsuarioId = require('../middlewares/validarUsuarioId')
+
+const {
+    validarUsuario,
+    validarUsuarioId
+} = require("../middlewares/usuarios.middlewares")
+
 const router = Router()
 
 router.get('/', usuariosController.obtenerUsuarios)

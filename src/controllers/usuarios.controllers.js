@@ -3,7 +3,7 @@ const { User } = require('../models')
 const obtenerUsuarios = async (req, res) => {
     /* #swagger.tags = ['Usuarios']
         #swagger.summary = 'Obtener todos los usuarios del sistema'
-        #swagger.responses[201] = {
+        #swagger.responses[200] = {
             description: 'Usuarios retornados exitosamente.'
         }
     */
@@ -11,22 +11,22 @@ const obtenerUsuarios = async (req, res) => {
 
     try {
         const usuarios = await User.findAll()
-        res.status(201).json(usuarios)
+        res.status(200).json(usuarios)
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.status(500).json({ error: `Hubo un error a la hora de obtener los usuarios: ${error.message}` })
     }
 }
 
-const obtenerUsuario = async (req, res) => {
+const obtenerUsuario = (req, res) => {
     /* #swagger.tags = ['Usuarios']
         #swagger.summary = 'Obtiene los detalles de un usuario por su ID'
         #swagger.parameters['id'] = {
             in: 'path',
-            description: 'ID numérico del usuario a buscar',
+            description: 'ID cadena de texto del usuario a buscar',
             required: true,
-            type: 'integer'
+            type: 'string'
         }
-        #swagger.responses[201] = {
+        #swagger.responses[200] = {
             description: 'Usuario encontrado exitosamente.'
         }
         #swagger.responses[404] = {
@@ -36,18 +36,12 @@ const obtenerUsuario = async (req, res) => {
 
 
     try {
-        const usuario = await User.findByPk(req.params.id)
+        const usuario = req.usuario
 
-        if (!usuario) {
-            return res.status(404).json({
-                mensaje: 'Usuario no encontrado'
-            })
-        }
-
-        res.status(201).json(usuario)
+        res.status(200).json(usuario)
 
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.status(500).json({ error: `Hubo un error a la hora de obtener el usuario: ${error.message}` })
     }
 }
 
@@ -82,7 +76,7 @@ const crearUsuario = async (req, res) => {
         res.status(201).json(usuario)
 
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.status(500).json({ error: `Hubo un error a la hora de crear el usuario: ${error.message}` })
     }
 }
 
@@ -91,9 +85,9 @@ const editarUsuario = async (req, res) => {
         #swagger.summary = 'Editar los datos de un usuario por su ID'
         #swagger.parameters['id'] = {
             in: 'path',
-            description: 'ID numérico del usuario a buscar',
+            description: 'ID cadena de texto del usuario a buscar',
             required: true,
-            type: 'integer'
+            type: 'string'
         }
         #swagger.requestBody = {
             required: true,
@@ -105,7 +99,7 @@ const editarUsuario = async (req, res) => {
                 }
             }
         }
-        #swagger.responses[201] = {
+        #swagger.responses[200] = {
             description: 'Usuario modificado con exito.'
         }
         #swagger.responses[400] = {
@@ -118,22 +112,23 @@ const editarUsuario = async (req, res) => {
 
 
     try {
-        const usuario = await User.findByPk(req.params.id)
 
-        if (!usuario) {
-            return res.status(404).json({
-                mensaje: 'Usuario no encontrado'
-            })
-        }
+        //nickname validado viejo
+        const {nickname} = req.usuario
 
-        await usuario.update({
-            nickname: req.body.nickname
-        })
+        await User.update({
+            nickname: req.body.nickname //nickname nuevo
+            }, {
+                where: {
+                    nickname: nickname //matchear con el viejo
+                }
+            }
+        );
 
-        res.status(201).json(usuario)
+        res.status(200).json("Usuario actualizado con exito")
 
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.status(500).json({ error: `Hubo un error a la hora de editar el usuario: ${error.message}` })
     }
 }
 
@@ -142,11 +137,11 @@ const eliminarUsuario = async (req, res) => {
         #swagger.summary = 'Elimina un usuario del sistema por su id'
         #swagger.parameters['id'] = {
             in: 'path',
-            description: 'ID numérico del usuario a eliminar',
+            description: 'ID cadena de texto del usuario a eliminar',
             required: true,
-            type: 'integer'
+            type: 'string'
         }
-        #swagger.responses[201] = {
+        #swagger.responses[200] = {
             description: 'Usuario eliminado exitosamente.'
         }
         #swagger.responses[404] = {
@@ -156,22 +151,21 @@ const eliminarUsuario = async (req, res) => {
 
 
     try {
-        const usuario = await User.findByPk(req.params.id)
 
-        if (!usuario) {
-            return res.status(404).json({
-                mensaje: 'Usuario no encontrado'
-            })
-        }
+        const {nickname} = req.usuario
 
-        await usuario.destroy()
+        await User.destroy({
+            where: {
+                nickname: nickname
+            }
+        })
 
-        res.status(201).json({
+        res.status(200).json({
             mensaje: 'Usuario eliminado exitosamente'
         })
 
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.status(500).json({ error: `Hubo un error a la hora de eliminar el usario: ${error.message}` })
     }
 }
 

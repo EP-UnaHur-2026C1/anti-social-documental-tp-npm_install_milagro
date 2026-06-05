@@ -1,7 +1,7 @@
 {
   "development": {
     "dialect": "sqlite",
-    "storage": "../data/anti_social_red.sqlite"
+    "storage": "./src/data/anti_social_red.sqlite"
   },
   "test": {
     "username": "root",

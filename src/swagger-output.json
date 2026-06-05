@@ -207,7 +207,7 @@
         "summary": "Obtener todos los usuarios del sistema",
         "description": "",
         "responses": {
-          "201": {
+          "200": {
             "description": "Usuarios retornados exitosamente."
           },
           "500": {
@@ -259,11 +259,11 @@
             "schema": {
               "type": "string"
             },
-            "description": "ID numérico del usuario a buscar"
+            "description": "ID cadena de texto del usuario a buscar"
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "Usuario encontrado exitosamente."
           },
           "404": {
@@ -288,11 +288,11 @@
             "schema": {
               "type": "string"
             },
-            "description": "ID numérico del usuario a buscar"
+            "description": "ID cadena de texto del usuario a buscar"
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "Usuario modificado con exito."
           },
           "400": {
@@ -330,11 +330,11 @@
             "schema": {
               "type": "string"
             },
-            "description": "ID numérico del usuario a eliminar"
+            "description": "ID cadena de texto del usuario a eliminar"
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "Usuario eliminado exitosamente."
           },
           "404": {

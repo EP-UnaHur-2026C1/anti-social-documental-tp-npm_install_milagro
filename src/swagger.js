@@ -28,6 +28,9 @@ const doc = {
             UsuarioNuevo: {
                 $nickname: "user_123"
             },
+            EtiquetaNueva: {
+                $name: "Entretenimiento"
+            },
             PublicacionNueva: {
                 $user_nickname: "user_123",
                 $text: "Este es el texto principal del post",

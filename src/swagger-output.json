@@ -348,10 +348,14 @@
     },
     "/etiquetas/": {
       "get": {
+        "tags": [
+          "Etiquetas"
+        ],
+        "summary": "Obtener todas las etiquetas del sistema",
         "description": "",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Etiquetas retornadas exitosamente."
           },
           "500": {
             "description": "Internal Server Error"
@@ -359,19 +363,40 @@
         }
       },
       "post": {
+        "tags": [
+          "Etiquetas"
+        ],
+        "summary": "Crea una nueva etiquetas en el sistema",
         "description": "",
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Etiqueta creada exitosamente."
+          },
+          "400": {
+            "description": "El campo name es obligatorio o está vacío."
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EtiquetaNueva"
+              }
+            }
           }
         }
       }
     },
     "/etiquetas/{id}": {
       "get": {
+        "tags": [
+          "Etiquetas"
+        ],
+        "summary": "Obtiene los detalles de una etiqueta por su ID",
         "description": "",
         "parameters": [
           {
@@ -380,15 +405,16 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "ID cadena de texto de la etiqueta a buscar"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Etiqueta encontrado exitosamente."
           },
           "404": {
-            "description": "Not Found"
+            "description": "Etiqueta no encontrado."
           },
           "500": {
             "description": "Internal Server Error"
@@ -396,6 +422,10 @@
         }
       },
       "put": {
+        "tags": [
+          "Etiquetas"
+        ],
+        "summary": "Editar los datos de una etiqueta por su ID",
         "description": "",
         "parameters": [
           {
@@ -404,22 +434,40 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "ID cadena de texto de la etiqueta a buscar"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Etiqueta modificada con exito."
+          },
+          "400": {
+            "description": "El campo name es obligatorio o está vacío."
           },
           "404": {
-            "description": "Not Found"
+            "description": "Etiqueta no encontrada en la base de datos."
           },
           "500": {
             "description": "Internal Server Error"
           }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EtiquetaNueva"
+              }
+            }
+          }
         }
       },
       "delete": {
+        "tags": [
+          "Etiquetas"
+        ],
+        "summary": "Elimina una etiqueta del sistema por su id",
         "description": "",
         "parameters": [
           {
@@ -428,15 +476,16 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "ID cadena de texto de la etiqueta a eliminar"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Etiqueta eliminado exitosamente."
           },
           "404": {
-            "description": "Not Found"
+            "description": "Etiqueta no encontrado."
           },
           "500": {
             "description": "Internal Server Error"
@@ -555,6 +604,18 @@
         },
         "required": [
           "nickname"
+        ]
+      },
+      "EtiquetaNueva": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Entretenimiento"
+          }
+        },
+        "required": [
+          "name"
         ]
       },
       "PublicacionNueva": {

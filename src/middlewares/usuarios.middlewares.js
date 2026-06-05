@@ -1,7 +1,7 @@
 const {User} = require("../models")
 const schemaUsuarios = require("../schema/usuarios.schema")
 
-const validarUsuario = (req, res, next) => {
+const validarUsuarioSchema = (req, res, next) => {
     const {error} = schemaUsuarios.validate(req.body)
     if (error) {
         return res.status(400).json({error: `El body no cumple con los parametros solicitados: ${error.details[0].message}`})
@@ -32,5 +32,5 @@ const validarUsuarioId = async (req, res, next) => {
 
 module.exports = {
     validarUsuarioId,
-    validarUsuario
+    validarUsuarioSchema
 }

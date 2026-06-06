@@ -4,7 +4,7 @@ const comentariosController = require('../controllers/comentarios.controllers')
 const {
     validarComentario,
     validarComentarioId
-} = require("../middlewares/comentarios.middleware")
+} = require("../middlewares/comentarios.middlewares")
 
 const router = Router()
 

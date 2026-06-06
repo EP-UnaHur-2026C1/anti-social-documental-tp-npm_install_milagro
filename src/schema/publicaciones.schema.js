@@ -11,7 +11,7 @@ const schemaPublicaciones = Joi.object( {
         "string.empty": "El campo text es obligatorio",
         "string.min": "El campo text debe tener al menos 3 caracteres"
     }),
-    description: Joi.string().min(3).max(500).messages({
+    description: Joi.string().required().min(3).max(500).messages({
         "string.base": "El campo description debe ser texto",
         "string.min": "El campo description debe tener al menos 3 caracteres"
     })

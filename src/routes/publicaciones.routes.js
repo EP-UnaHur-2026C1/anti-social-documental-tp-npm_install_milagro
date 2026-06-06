@@ -7,12 +7,16 @@ const comentariosController = require("../controllers/comentarios.controllers")
 const {
     validarPublicacion,
     validarPublicacionId
-} = require("../middlewares/publicaciones.middleware")
+} = require("../middlewares/publicaciones.middlewares")
+
+//midleware de realacion publicacion-etiquetas
+const validarPublicacionIdYEtiquetaId = require("../middlewares//postTags.midlewares")
+
 
 //midleware de comentario
 const {
     validarComentario
-} = require("../middlewares/comentarios.middleware")
+} = require("../middlewares/comentarios.middlewares")
 
 const router = Router()
 
@@ -23,12 +27,13 @@ router.put('/:id', validarPublicacionId, validarPublicacion, publicacionesContro
 router.delete('/:id', validarPublicacionId, publicacionesController.eliminarPublicacion)
 
 // Relación Post - Tag
-router.post('/:postId/etiquetas/:tagId', postTagsController.agregarEtiqueta)
+router.get('/:id/etiquetas', validarPublicacionId, postTagsController.obtenerEtiquetasDePost)
+router.post('/:postId/etiquetas/:tagId', validarPublicacionIdYEtiquetaId, postTagsController.agregarEtiqueta)
 
-router.get('/:postId/etiquetas', postTagsController.obtenerEtiquetasDePost)
+
 
 // Relacion Post - Comment
-
-router.post('/:id/comentarios', validarPublicacionId, validarComentario, comentariosController.crearComentario)
+//router.get('/:id/comentarios', validarPublicacionId, comentariosController.obtener)
+//router.post('/:id/comentarios', validarPublicacionId, validarComentario, comentariosController.crearComentario)
 
 module.exports = router

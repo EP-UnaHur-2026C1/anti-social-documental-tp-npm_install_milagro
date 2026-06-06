@@ -1,8 +1,12 @@
 const { Router } = require('express')
 const publicacionesController = require('../controllers/publicaciones.controllers')
 const postTagsController = require('../controllers/postTags.controllers')
-const validarPublicacion = require('../middlewares/validarPublicacion')
-const validarPublicacionId = require('../middlewares/validarPublicacionId')
+
+const {
+    validarPublicacion,
+    validarPublicacionId
+} = require("../middlewares/publicaciones.middleware")
+
 const router = Router()
 
 router.get('/', publicacionesController.obtenerPublicaciones)

@@ -9,32 +9,36 @@ const obtenerPublicaciones = async (req, res) => {
             }
         })
 
-        res.json(publicaciones)
+        const publicacionesMapeadas = publicaciones.map(publi => {
+            return {
+                id: publi.id ,
+                text: publi.text,
+                description: publi.description,
+                user_nickname: publi.user_nickname
+            }
+        })
+
+        res.status(200).json(publicacionesMapeadas)
 
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.status(500).json({ error: `Hubo un error a la hora de obtener las publicaciones: ${error.message}` })
     }
 }
 
 const obtenerPublicacion = async (req, res) => {
     try {
-        const publicacion = await Post.findByPk(req.params.id)
+        const publicacion = req.publicacion
 
-        if (!publicacion) {
-            return res.status(404).json({
-                mensaje: 'Publicación no encontrada'
-            })
-        }
-
-        res.json(publicacion)
+        res.status(200).json(publicacion)
 
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.status(500).json({ error: `Hubo un error a la hora de obtener la publicacion por ID: ${error.message}` })
     }
 }
 
 const crearPublicacion = async (req, res) => {
     try {
+
         const publicacion = await Post.create({
             user_nickname: req.body.user_nickname,
             text: req.body.text,
@@ -44,50 +48,44 @@ const crearPublicacion = async (req, res) => {
         res.status(201).json(publicacion)
 
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.status(500).json({ error: `Hubo un error a la hora de crear una publicacion: ${error.message}` })
     }
 }
 
 const editarPublicacion = async (req, res) => {
     try {
-        const publicacion = await Post.findByPk(req.params.id)
+        const {id} = req.publicacion
 
-        if (!publicacion) {
-            return res.status(404).json({
-                mensaje: 'Publicación no encontrada'
-            })
-        }
-
-        await publicacion.update({
+        await Post.update({
             text: req.body.text,
             description: req.body.description
+        }, {
+            where: {
+                id: id
+            }
         })
 
-        res.json(publicacion)
+        res.status(200).json("Publicacion actualizada con exito")
 
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.status(500).json({ error: `Hubo un error a la hora de editar la publicacion: ${error.message}` })
     }
 }
 
 const eliminarPublicacion = async (req, res) => {
     try {
-        const publicacion = await Post.findByPk(req.params.id)
+        const {id} = req.publicacion
 
-        if (!publicacion) {
-            return res.status(404).json({
-                mensaje: 'Publicación no encontrada'
-            })
-        }
-
-        await publicacion.destroy()
-
-        res.json({
-            mensaje: 'Publicación eliminada'
+        await Post.destroy({
+            where: {
+                id: id
+            }
         })
 
+        res.status(200).json("Publicacion eliminada")
+
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.status(500).json({ error: `Hubo un error a la eliminar la publicacion: ${error.message}` })
     }
 }
 

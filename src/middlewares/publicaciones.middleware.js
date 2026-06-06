@@ -1,19 +1,12 @@
 const { Post } = require('../models')
+const schemaPublicaciones = require("../schema/publicaciones.schema")
+
 
 const validarPublicacion = (req, res, next) => {
 
-    const { user_nickname, text } = req.body
-
-    if (!user_nickname) {
-        return res.status(400).json({
-            mensaje: 'El user_nickname es obligatorio'
-        })
-    }
-
-    if (!text) {
-        return res.status(400).json({
-            mensaje: 'El texto es obligatorio'
-        })
+    const {error} = schemaPublicaciones.validate(req.body)
+    if (error) {
+        return res.status(400).json({error: `El body no cumple con los parametros solicitados: ${error.details[0].message}`})
     }
 
     next()

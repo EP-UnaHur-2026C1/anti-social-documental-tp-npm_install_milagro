@@ -1,12 +1,17 @@
 const { Router } = require('express')
 const comentariosController = require('../controllers/comentarios.controllers')
 
+const {
+    validarComentario,
+    validarComentarioId
+} = require("../middlewares/comentarios.middleware")
+
 const router = Router()
 
 router.get('/', comentariosController.obtenerComentarios)
-router.get('/:id', comentariosController.obtenerComentario)
-router.post('/', comentariosController.crearComentario)
-router.put('/:id', comentariosController.editarComentario)
-router.delete('/:id', comentariosController.eliminarComentario)
+router.get('/:id', validarComentarioId, comentariosController.obtenerComentario)
+router.post('/', validarComentario, comentariosController.crearComentario)
+router.put('/:id', validarComentarioId, validarComentario, comentariosController.editarComentario)
+router.delete('/:id', validarComentarioId, comentariosController.eliminarComentario)
 
 module.exports = router

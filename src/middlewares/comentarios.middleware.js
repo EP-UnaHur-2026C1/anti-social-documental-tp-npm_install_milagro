@@ -1,13 +1,12 @@
 const { Comment } = require('../models')
+const schemaComentarios = require("../schema/comentarios.schema")
+
 
 const validarComentario = (req, res, next) => {
 
-    const { text } = req.body
-
-    if (!text) {
-        return res.status(400).json({
-            mensaje: 'El texto es obligatorio'
-        })
+    const {error} = schemaComentarios.validate(req.body)
+    if (error) {
+        return res.status(400).json({error: `El body no cumple con los parametros solicitados: ${error.details[0].message}`})
     }
 
     next()

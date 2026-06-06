@@ -1,6 +1,13 @@
 const { Post, User } = require('../models')
 
 const obtenerPublicaciones = async (req, res) => {
+    /* #swagger.tags = ['Publicaciones']
+        #swagger.summary = 'Obtener todos las publicaciones del sistema'
+        #swagger.responses[200] = {
+            description: 'Publicaciones retornados exitosamente.'
+        }
+    */
+
     try {
         const publicaciones = await Post.findAll({
             include: {
@@ -26,6 +33,23 @@ const obtenerPublicaciones = async (req, res) => {
 }
 
 const obtenerPublicacion = async (req, res) => {
+    /* #swagger.tags = ['Publicaciones']
+        #swagger.summary = 'Obtiene los detalles de una publicacion por su ID'
+        #swagger.parameters['id'] = {
+            in: 'path',
+            description: 'ID cadena de texto de la publicacion a buscar',
+            required: true,
+            type: 'string'
+        }
+        #swagger.responses[200] = {
+            description: 'Publicacion encontrada exitosamente.'
+        }
+        #swagger.responses[404] = {
+            description: 'Publicacion no encontrada.'
+        }
+    */
+
+
     try {
         const publicacion = req.publicacion
 
@@ -37,6 +61,27 @@ const obtenerPublicacion = async (req, res) => {
 }
 
 const crearPublicacion = async (req, res) => {
+    /* #swagger.tags = ['Publicaciones']
+        #swagger.summary = 'Crea un nuevo usuario en el sistema'
+        #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/components/schemas/PublicacionNueva"
+                    }
+                }
+            }
+        }
+        #swagger.responses[201] = {
+            description: 'Publiicacion creada exitosamente.'
+        }
+        #swagger.responses[400] = {
+            description: 'El body no esta completo.'
+        }
+    */
+
+
     try {
 
         const publicacion = await Post.create({
@@ -53,6 +98,36 @@ const crearPublicacion = async (req, res) => {
 }
 
 const editarPublicacion = async (req, res) => {
+    /* #swagger.tags = ['Publicaciones']
+        #swagger.summary = 'Editar los datos de una publicacion por su ID'
+        #swagger.parameters['id'] = {
+            in: 'path',
+            description: 'ID cadena de texto de la publicacion a buscar',
+            required: true,
+            type: 'string'
+        }
+        #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/components/schemas/PublicacionNueva"
+                    }
+                }
+            }
+        }
+        #swagger.responses[200] = {
+            description: 'Publicacion modificada con exito.'
+        }
+        #swagger.responses[400] = {
+            description: 'El body no esta completo'
+        }
+        #swagger.responses[404] = {
+            description: 'Publicacion no encontrada en la base de datos.'
+        }
+    */
+
+
     try {
         const {id} = req.publicacion
 
@@ -73,6 +148,23 @@ const editarPublicacion = async (req, res) => {
 }
 
 const eliminarPublicacion = async (req, res) => {
+    /* #swagger.tags = ['Publicaciones']
+        #swagger.summary = 'Elimina una publicacion del sistema por su id'
+        #swagger.parameters['id'] = {
+            in: 'path',
+            description: 'ID cadena de texto de la publicacion a eliminar',
+            required: true,
+            type: 'string'
+        }
+        #swagger.responses[200] = {
+            description: 'Publicacion eliminada exitosamente.'
+        }
+        #swagger.responses[404] = {
+            description: 'Publicacion no encontrada.'
+        }
+    */
+
+
     try {
         const {id} = req.publicacion
 

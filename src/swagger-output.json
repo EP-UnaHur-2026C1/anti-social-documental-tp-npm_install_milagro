@@ -31,10 +31,14 @@
   "paths": {
     "/publicaciones/": {
       "get": {
+        "tags": [
+          "Publicaciones"
+        ],
+        "summary": "Obtener todos las publicaciones del sistema",
         "description": "",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Publicaciones retornados exitosamente."
           },
           "500": {
             "description": "Internal Server Error"
@@ -42,22 +46,40 @@
         }
       },
       "post": {
+        "tags": [
+          "Publicaciones"
+        ],
+        "summary": "Crea un nuevo usuario en el sistema",
         "description": "",
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Publiicacion creada exitosamente."
           },
           "400": {
-            "description": "Bad Request"
+            "description": "El body no esta completo."
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublicacionNueva"
+              }
+            }
           }
         }
       }
     },
     "/publicaciones/{id}": {
       "get": {
+        "tags": [
+          "Publicaciones"
+        ],
+        "summary": "Obtiene los detalles de una publicacion por su ID",
         "description": "",
         "parameters": [
           {
@@ -66,18 +88,16 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "ID cadena de texto de la publicacion a buscar"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
+            "description": "Publicacion encontrada exitosamente."
           },
           "404": {
-            "description": "Not Found"
+            "description": "Publicacion no encontrada."
           },
           "500": {
             "description": "Internal Server Error"
@@ -85,6 +105,10 @@
         }
       },
       "put": {
+        "tags": [
+          "Publicaciones"
+        ],
+        "summary": "Editar los datos de una publicacion por su ID",
         "description": "",
         "parameters": [
           {
@@ -93,25 +117,40 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "ID cadena de texto de la publicacion a buscar"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Publicacion modificada con exito."
           },
           "400": {
-            "description": "Bad Request"
+            "description": "El body no esta completo"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Publicacion no encontrada en la base de datos."
           },
           "500": {
             "description": "Internal Server Error"
           }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublicacionNueva"
+              }
+            }
+          }
         }
       },
       "delete": {
+        "tags": [
+          "Publicaciones"
+        ],
+        "summary": "Elimina una publicacion del sistema por su id",
         "description": "",
         "parameters": [
           {
@@ -120,18 +159,16 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "ID cadena de texto de la publicacion a eliminar"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
+            "description": "Publicacion eliminada exitosamente."
           },
           "404": {
-            "description": "Not Found"
+            "description": "Publicacion no encontrada."
           },
           "500": {
             "description": "Internal Server Error"

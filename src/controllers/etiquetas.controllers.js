@@ -22,7 +22,7 @@ const obtenerEtiqueta = (req, res) => {
         #swagger.summary = 'Obtiene los detalles de una etiqueta por su ID'
         #swagger.parameters['id'] = {
             in: 'path',
-            description: 'ID cadena de texto de la etiqueta a buscar',
+            description: 'ID de la etiqueta a buscar',
             required: true,
             type: 'integer'
         }
@@ -86,7 +86,7 @@ const editarEtiqueta = async (req, res) => {
         #swagger.summary = 'Editar los datos de una etiqueta por su ID'
         #swagger.parameters['id'] = {
             in: 'path',
-            description: 'ID cadena de texto de la etiqueta a buscar',
+            description: 'ID de la etiqueta a buscar',
             required: true,
             type: 'integer'
         }
@@ -135,7 +135,7 @@ const eliminarEtiqueta = async (req, res) => {
         #swagger.summary = 'Elimina una etiqueta del sistema por su id'
         #swagger.parameters['id'] = {
             in: 'path',
-            description: 'ID cadena de texto de la etiqueta a eliminar',
+            description: 'ID  de la etiqueta a eliminar',
             required: true,
             type: 'integer'
         }

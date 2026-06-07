@@ -37,7 +37,7 @@ const obtenerPublicacion = async (req, res) => {
         #swagger.summary = 'Obtiene los detalles de una publicacion por su ID'
         #swagger.parameters['id'] = {
             in: 'path',
-            description: 'ID cadena de texto de la publicacion a buscar',
+            description: 'ID de la publicacion a buscar',
             required: true,
             type: 'integer'
         }
@@ -102,7 +102,7 @@ const editarPublicacion = async (req, res) => {
         #swagger.summary = 'Editar los datos de una publicacion por su ID'
         #swagger.parameters['id'] = {
             in: 'path',
-            description: 'ID cadena de texto de la publicacion a buscar',
+            description: 'ID de la publicacion a buscar',
             required: true,
             type: 'integer'
         }
@@ -152,7 +152,7 @@ const eliminarPublicacion = async (req, res) => {
         #swagger.summary = 'Elimina una publicacion del sistema por su id'
         #swagger.parameters['id'] = {
             in: 'path',
-            description: 'ID cadena de texto de la publicacion a eliminar',
+            description: 'ID de la publicacion a eliminar',
             required: true,
             type: 'integer'
         }

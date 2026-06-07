@@ -89,7 +89,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "ID cadena de texto de la publicacion a buscar"
+            "description": "ID de la publicacion a buscar"
           }
         ],
         "responses": {
@@ -118,7 +118,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "ID cadena de texto de la publicacion a buscar"
+            "description": "ID de la publicacion a buscar"
           }
         ],
         "responses": {
@@ -160,7 +160,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "ID cadena de texto de la publicacion a eliminar"
+            "description": "ID de la publicacion a eliminar"
           }
         ],
         "responses": {
@@ -377,6 +377,122 @@
         }
       }
     },
+    "/publicaciones/{id}/comentarios": {
+      "get": {
+        "tags": [
+          "Publicaciones"
+        ],
+        "summary": "Obtener comentarios visibles de una publicación",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID de la publicación"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Comentarios retornados exitosamente."
+          },
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "Publicación no encontrada."
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Publicaciones"
+        ],
+        "summary": "Crear un nuevo comentario en una publicación específica",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID de la publicación"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Comentario creado exitosamente."
+          },
+          "400": {
+            "description": "El cuerpo de la solicitud es inválido."
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComentarioNuevo"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/publicaciones/{postId}/comentarios/{comentarioId}": {
+      "delete": {
+        "tags": [
+          "Publicaciones"
+        ],
+        "summary": "Elimina un comentario del sistema por su id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID de la publlicacion con el comentario a eliminar"
+          },
+          {
+            "name": "comentarioId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID del comentario a eliminar"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Comentario eliminado exitosamente."
+          },
+          "404": {
+            "description": "Comentario no encontrado."
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/usuarios/": {
       "get": {
         "tags": [
@@ -584,7 +700,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "ID cadena de texto de la etiqueta a buscar"
+            "description": "ID de la etiqueta a buscar"
           }
         ],
         "responses": {
@@ -613,7 +729,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "ID cadena de texto de la etiqueta a buscar"
+            "description": "ID de la etiqueta a buscar"
           }
         ],
         "responses": {
@@ -655,7 +771,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "ID cadena de texto de la etiqueta a eliminar"
+            "description": "ID de la etiqueta a eliminar"
           }
         ],
         "responses": {
@@ -703,7 +819,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "ID cadena de texto del comentario a buscar"
+            "description": "ID del comentario a buscar"
           }
         ],
         "responses": {
@@ -774,7 +890,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "ID cadena de texto del comentario a eliminar"
+            "description": "ID del comentario a eliminar"
           }
         ],
         "responses": {

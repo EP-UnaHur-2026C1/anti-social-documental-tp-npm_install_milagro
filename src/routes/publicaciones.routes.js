@@ -46,6 +46,6 @@ router.delete('/:postId/imagenes/:imageId', validarPublicacionEImagenId, postIma
 // Relacion Post - Comment
 router.get('/:id/comentarios', validarPublicacionId, comentariosController.obtenerComentariosDeUnPost)
 router.post('/:id/comentarios', validarPublicacionId, validarComentario, comentariosController.crearComentarioEnPost)
-router.delete('/:postId/comentarios/:comentarioId',validarPublicacionYComentarioId, comentariosController.eliminarComentario);
+router.delete('/:postId/comentarios/:comentarioId',validarPublicacionYComentarioId, comentariosController.eliminarComentarioDeUnPost);
 
 module.exports = router

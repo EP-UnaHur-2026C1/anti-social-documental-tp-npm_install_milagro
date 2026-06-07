@@ -47,6 +47,7 @@ const validarPublicacionYComentarioId = async (req, res, next) => {
     }
 
     req.comentario = comentario
+    req.publicacion = postId
 
     next()
 }

@@ -23,7 +23,7 @@ const obtenerComentario =  (req, res) => {
         #swagger.summary = 'Obtiene los detalles de un comentario por su ID'
         #swagger.parameters['id'] = {
             in: 'path',
-            description: 'ID cadena de texto del comentario a buscar',
+            description: 'ID del comentario a buscar',
             required: true,
             type: 'integer'
         }
@@ -47,6 +47,22 @@ const obtenerComentario =  (req, res) => {
 }
 
 const obtenerComentariosDeUnPost = async (req, res) => {
+    /* #swagger.tags = ['Publicaciones']
+    #swagger.summary = 'Obtener comentarios visibles de una publicación'
+    #swagger.parameters['id'] = {
+        in: 'path',
+        description: 'ID de la publicación',
+        required: true,
+        type: 'integer'
+    }
+    #swagger.responses[200] = {
+        description: 'Comentarios retornados exitosamente.'
+    }
+    #swagger.responses[404] = {
+        description: 'Publicación no encontrada.'
+    }
+    */
+
 
     try {
         //Id de publicacion
@@ -85,26 +101,27 @@ const obtenerComentariosDeUnPost = async (req, res) => {
 
 const crearComentarioEnPost = async (req, res) => {
     /* #swagger.tags = ['Publicaciones']
-        #swagger.summary = 'Crea un nuevo comentario en el sistema de la publicacion pasada por ID'
-        #swagger.requestBody = {
-            required: true,
-            content: {
-                "application/json": {
-                    schema: {
-                        $ref: "#/components/schemas/ComentarioNuevo"
-                    }
-                }
+    #swagger.summary = 'Crear un nuevo comentario en una publicación específica'
+    #swagger.parameters['id'] = {
+        in: 'path',
+        description: 'ID de la publicación',
+        required: true,
+        type: 'integer'
+    }
+    #swagger.requestBody = {
+        required: true,
+        content: {
+            "application/json": {
+                schema: { "$ref": "#/components/schemas/ComentarioNuevo" }
             }
         }
-        #swagger.responses[201] = {
-            description: 'Comentario creado exitosamente.'
-        }
-        #swagger.responses[404] = {
-            description: 'Publicacion no encontrada en la Base de datos.'
-        }
-        #swagger.responses[400] = {
-            description: 'El body no cumple con los requisitos.'
-        }
+    }
+    #swagger.responses[201] = {
+        description: 'Comentario creado exitosamente.'
+    }
+    #swagger.responses[400] = {
+        description: 'El cuerpo de la solicitud es inválido.'
+    }
     */
 
 
@@ -126,12 +143,13 @@ const crearComentarioEnPost = async (req, res) => {
     }
 }
 
+
 const editarComentario = async (req, res) => {
     /* #swagger.tags = ['Comentarios']
         #swagger.summary = 'Editar los datos de un comentario por su ID'
         #swagger.parameters['id'] = {
             in: 'path',
-            description: 'ID cadena de texto del comentario a buscar',
+            description: 'ID del comentario a buscar',
             required: true,
             type: 'integer'
         }
@@ -181,7 +199,7 @@ const eliminarComentario = async (req, res) => {
         #swagger.summary = 'Elimina un comentario del sistema por su id'
         #swagger.parameters['id'] = {
             in: 'path',
-            description: 'ID cadena de texto del comentario a eliminar',
+            description: 'ID del comentario a eliminar',
             required: true,
             type: 'integer'
         }
@@ -212,11 +230,57 @@ const eliminarComentario = async (req, res) => {
     }
 }
 
+const eliminarComentarioDeUnPost = async (req, res) => {
+    /* #swagger.tags = ['Publicaciones']
+        #swagger.summary = 'Elimina un comentario del sistema por su id'
+        #swagger.parameters['postId'] = {
+            in: 'path',
+            description: 'ID de la publlicacion con el comentario a eliminar',
+            required: true,
+            type: 'integer'
+        }
+        #swagger.parameters['comentarioId'] = {
+            in: 'path',
+            description: 'ID del comentario a eliminar',
+            required: true,
+            type: 'integer'
+        }
+        #swagger.responses[200] = {
+            description: 'Comentario eliminado exitosamente.'
+        }
+        #swagger.responses[404] = {
+            description: 'Comentario no encontrado.'
+        }
+    */
+    
+
+    try {
+        const {id} = req.comentario
+        const postId = req.publicacion
+
+
+        await Comment.destroy({
+            where: {
+                id: id,
+                post_id: postId
+            }
+        })
+
+        res.status(200).json({
+            mensaje: 'Comentario eliminado'
+        })
+
+    } catch (error) {
+        res.status(500).json({ error: `Hubo un error a la hora de eliminar el comentario: ${error.message}` })
+    }
+}
+
 module.exports = {
     obtenerComentarios,
     obtenerComentario,
     obtenerComentariosDeUnPost,
     crearComentarioEnPost,
     editarComentario,
+    eliminarComentarioDeUnPost,
     eliminarComentario
 }

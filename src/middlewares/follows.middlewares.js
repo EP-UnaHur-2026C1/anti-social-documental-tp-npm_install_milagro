@@ -11,12 +11,12 @@ const validarFollow = (req, res, next) => {
     next()
 }
 
-const validarFollowing = (req, res, next) => {
-    const {nickFollowing} = req.params
+const validarFollow = (req, res, next) => {
+    const {nicknameSeguidor, nicknameSeguido} = req.params
 
-    const seguidos = follows.findAll({
+    const seguidos = await follows.findOne({
         where: {
-            following_user_nickname : nickFollowing
+            following_user_nickname : nicknameSeguidor
         }
     })
 
@@ -26,7 +26,8 @@ const validarFollowing = (req, res, next) => {
         })
     }
 
-    //no se si iría algo aca entre medio
+    req.nicknameSeguidor = nicknameSeguidor
+    req.nicknameSeguido = nicknameSeguido
 
     next()
 }

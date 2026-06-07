@@ -10,3 +10,23 @@ const validarFollow = (req, res, next) => {
 
     next()
 }
+
+const validarFollowing = (req, res, next) => {
+    const {nickFollowing} = req.params
+
+    const seguidos = follows.findAll({
+        where: {
+            following_user_nickname : nickFollowing
+        }
+    })
+
+    if (!seguidos) {
+        return res.status(404).json({
+            mensaje: 'Ususarios Seguidos no encontrados o Usuario inexistente'
+        })
+    }
+
+    //no se si iría algo aca entre medio
+
+    next()
+}

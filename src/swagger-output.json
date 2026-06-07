@@ -859,6 +859,18 @@
           "is_visible",
           "user_nickname"
         ]
+      },
+      "ImagenNueva": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "example": "https://ejemplo.com/tu-imagen.png"
+          }
+        },
+        "required": [
+          "url"
+        ]
       }
     }
   }

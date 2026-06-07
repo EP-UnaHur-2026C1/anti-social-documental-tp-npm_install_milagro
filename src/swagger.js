@@ -40,6 +40,9 @@ const doc = {
                 $text: "Este es un comentario",
                 $is_visible: true,
                 $user_nickname: 1
+            },
+            ImagenNueva: {
+                $url: "https://ejemplo.com/tu-imagen.png"
             }
         }
     }

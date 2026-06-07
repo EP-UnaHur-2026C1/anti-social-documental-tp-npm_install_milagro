@@ -1,4 +1,5 @@
-const { Comment } = require('../models')
+const { Comment, User } = require('../models')
+const { Op } = require('sequelize');
 
 const obtenerComentarios = async (req, res) => {
     /* #swagger.tags = ['Comentarios']
@@ -45,7 +46,44 @@ const obtenerComentario =  (req, res) => {
     }
 }
 
-const crearComentario = async (req, res) => {
+const obtenerComentariosDeUnPost = async (req, res) => {
+
+    try {
+        //Id de publicacion
+        const {id} = req.publicacion
+
+        const mesesLimite = parseInt(process.env.MESES_LIMITE) || 6; 
+        const fechaLimite = new Date();
+        fechaLimite.setMonth(fechaLimite.getMonth() - mesesLimite);
+
+        const comentarios = await Comment.findAll({
+            attributes: ["text"], 
+            where: {
+                post_id: id,
+                is_visible: true,
+                createdAt: { [Op.gte]: fechaLimite }
+            },
+            include: [{
+                model: User,
+                as: "user",
+                attributes: ["nickname"]
+            }]
+        });
+
+        const return_final = comentarios.map(c => ({
+            text: c.text,
+            nickname: c.user.nickname || "Usuario desconocido"
+            })
+        )
+
+    res.status(201).json(return_final)
+
+    } catch (error) {
+        res.status(500).json({ error: `Hubo un error a la hora de obtener comentarios de un post: ${error.message}` })
+    }
+}
+
+const crearComentarioEnPost = async (req, res) => {
     /* #swagger.tags = ['Publicaciones']
         #swagger.summary = 'Crea un nuevo comentario en el sistema de la publicacion pasada por ID'
         #swagger.requestBody = {
@@ -69,11 +107,11 @@ const crearComentario = async (req, res) => {
         }
     */
 
+
+    try {
         //Id de publicacion
         const {id} = req.publicacion
 
-    
-    try {
         const comentario = await Comment.create({
             text: req.body.text,
             is_visible: req.body.is_visible,
@@ -177,7 +215,8 @@ const eliminarComentario = async (req, res) => {
 module.exports = {
     obtenerComentarios,
     obtenerComentario,
-    crearComentario,
+    obtenerComentariosDeUnPost,
+    crearComentarioEnPost,
     editarComentario,
     eliminarComentario
 }

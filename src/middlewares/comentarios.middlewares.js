@@ -29,7 +29,30 @@ const validarComentarioId = async (req, res, next) => {
     next()
 }
 
+const validarPublicacionYComentarioId = async (req, res, next) => {
+
+    const { postId, comentarioId } = req.params
+
+    const comentario = await Comment.findOne({
+        where: {
+            id: comentarioId,
+            post_id: postId
+        }
+    })
+
+    if (!comentario) {
+        return res.status(404).json({
+            mensaje: 'Comentario no encontrado o no esta en este post'
+        })
+    }
+
+    req.comentario = comentario
+
+    next()
+}
+
 module.exports = {
     validarComentario,
-    validarComentarioId
+    validarComentarioId,
+    validarPublicacionYComentarioId
 }

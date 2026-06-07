@@ -21,7 +21,8 @@ const {
 
 //midleware de comentario
 const {
-    validarComentario
+    validarComentario,
+    validarPublicacionYComentarioId
 } = require("../middlewares/comentarios.middlewares")
 
 const router = Router()
@@ -43,7 +44,8 @@ router.delete('/:postId/imagenes/:imageId', validarPublicacionEImagenId, postIma
 
 
 // Relacion Post - Comment
-//router.get('/:id/comentarios', validarPublicacionId, comentariosController.obtener)
-//router.post('/:id/comentarios', validarPublicacionId, validarComentario, comentariosController.crearComentario)
+router.get('/:id/comentarios', validarPublicacionId, comentariosController.obtenerComentariosDeUnPost)
+router.post('/:id/comentarios', validarPublicacionId, validarComentario, comentariosController.crearComentarioEnPost)
+router.delete('/:postId/comentarios/:comentarioId',validarPublicacionYComentarioId, comentariosController.eliminarComentario);
 
 module.exports = router

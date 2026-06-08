@@ -2,7 +2,7 @@ const { Follows, User } = require('../models');
 
 const obtenerFollows = async (req, res) => {
     try {
-        const follows = Follows.findAll({
+        const follows = await Follows.findAll({
             where: {
                 following_user_nickname : req.body.following_user_nickname
             }
@@ -11,7 +11,7 @@ const obtenerFollows = async (req, res) => {
         const followsMapeados = follows.map(follow => {
             return {
                 id: follow.id ,
-                followed_user_nickname: publi.followed_user_nickname
+                followed_user_nickname: follow.followed_user_nickname
             }
         })
 
@@ -25,7 +25,7 @@ const obtenerFollows = async (req, res) => {
 const crearFollow = async (req, res) => {
     try {
 
-        const seguido = await Follow.create({
+        const seguido = await Follows.create({
             following_user_nickname: req.body.following_user_nickname,
             followed_user_nickname: req.body.followed_user_nicname
         })
@@ -40,7 +40,7 @@ const crearFollow = async (req, res) => {
 const eliminarFollow = async (req, res) => {
 
     try {
-        await Follow.destroy({
+        await Follows.destroy({
             where: {
                 following_user_nickname: req.body.following_user_nickname,
                 followed_user_nickname: req.body.followed_user_nickname

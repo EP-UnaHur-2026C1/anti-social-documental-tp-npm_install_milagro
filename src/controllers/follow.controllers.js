@@ -1,0 +1,57 @@
+const { Follows, User } = require('../models');
+
+const obtenerFollows = async (req, res) => {
+    try {
+        const follows = await Follows.findAll({
+            where: {
+                following_user_nickname : req.body.following_user_nickname
+            }
+        })
+        
+        const followsMapeados = follows.map(follow => {
+            return {
+                id: follow.id ,
+                followed_user_nickname: follow.followed_user_nickname
+            }
+        })
+
+        res.status(200).json(followsMapeados)
+    }
+    catch (error) {
+         res.status(500).json({ error: `Hubo un error al obtener los follows: ${error.message}` })
+    }
+}
+
+const crearFollow = async (req, res) => {
+    try {
+
+        const seguido = await Follows.create({
+            following_user_nickname: req.body.following_user_nickname,
+            followed_user_nickname: req.body.followed_user_nicname
+        })
+
+        res.status(201).json(seguido)
+
+    } catch (error) {
+        res.status(500).json({ error: `Hubo un error al registrar el follow: ${error.message}` })
+    }
+}
+
+const eliminarFollow = async (req, res) => {
+
+    try {
+        await Follows.destroy({
+            where: {
+                following_user_nickname: req.body.following_user_nickname,
+                followed_user_nickname: req.body.followed_user_nickname
+            }
+        })
+        res.status(201).json("seguimiento eliminado")
+    } catch (error) {
+        res.status(500).json({ error: `Hubo un error al eliminar el follow: ${error.message}` })
+    }
+}
+
+module.exports = {
+    crearFollow,obtenerFollows ,eliminarFollow
+}

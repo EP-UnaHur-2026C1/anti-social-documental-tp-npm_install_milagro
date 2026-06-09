@@ -9,7 +9,7 @@ const obtenerFollows = async (req, res) => {
             return {
                 id: follow.id,
                 followingUserNickname: follow.following_user_nickname,
-                followedUserNickname: followed_user_nickname
+                followedUserNickname: follow.followed_user_nickname
             }
         })
 

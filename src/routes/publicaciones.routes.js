@@ -25,11 +25,13 @@ const {
     validarPublicacionYComentarioId
 } = require("../middlewares/comentarios.middlewares")
 
+const { validarUsuarioExistenteEnBody } = require("../middlewares/usuarios.middlewares");
+
 const router = Router()
 
 router.get('/', publicacionesController.obtenerPublicaciones)
 router.get('/:id', validarPublicacionId, publicacionesController.obtenerPublicacion)
-router.post('/', validarPublicacion, publicacionesController.crearPublicacion)
+router.post('/', validarPublicacion, validarUsuarioExistenteEnBody, publicacionesController.crearPublicacion)
 router.put('/:id', validarPublicacionId, validarPublicacion, publicacionesController.editarPublicacion)
 router.delete('/:id', validarPublicacionId, publicacionesController.eliminarPublicacion)
 
@@ -45,7 +47,7 @@ router.delete('/:postId/imagenes/:imageId', validarPublicacionEImagenId, postIma
 
 // Relacion Post - Comment
 router.get('/:id/comentarios', validarPublicacionId, comentariosController.obtenerComentariosDeUnPost)
-router.post('/:id/comentarios', validarPublicacionId, validarComentario, comentariosController.crearComentarioEnPost)
+router.post('/:id/comentarios', validarPublicacionId, validarComentario, validarUsuarioExistenteEnBody, comentariosController.crearComentarioEnPost)
 router.delete('/:postId/comentarios/:comentarioId',validarPublicacionYComentarioId, comentariosController.eliminarComentarioDeUnPost);
 
 module.exports = router

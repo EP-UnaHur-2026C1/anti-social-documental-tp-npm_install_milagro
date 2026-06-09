@@ -29,16 +29,16 @@ const validarUser = async (req,res,next) => {
 }
 
 const validarFollowingUser = async (req, res, next) => {
-    const { following_user_nickname  } = req.body
+    const { followingUserNickname  } = req.body
 
 
     const seguidos = await Follows.findOne({
         where: {
-            following_user_nickname : following_user_nickname 
+            following_user_nickname : followingUserNickname
         }
     })
 
-    const seguidor = await  User.findByPk(following_user_nickname , {
+    const seguidor = await  User.findByPk(followingUserNickname , {
         attributes: ["nickname"]
     })
 
@@ -49,15 +49,15 @@ const validarFollowingUser = async (req, res, next) => {
         })
     }
     
-    req.following_user_nickname  = following_user_nickname 
+    req.followingUserNickname  = followingUserNickname 
 
     next()
 }
 
 const validarFollowedUser = async (req, res, next) => {
-    const {followed_user_nickname } = req.body
+    const {followedUserNickname } = req.body
 
-    const seguido = await User.findByPk(followed_user_nickname, {
+    const seguido = await User.findByPk(followedUserNickname, {
         attributes: ["nickname"]
     })
 
@@ -67,7 +67,7 @@ const validarFollowedUser = async (req, res, next) => {
         })
     }
     
-    req.followed_user_nickname = followed_user_nickname
+    req.followedUserNickname = followedUserNickname
 
     next()
 }

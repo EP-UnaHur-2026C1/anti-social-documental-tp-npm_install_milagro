@@ -1,4 +1,4 @@
-const joi = require("joi")
+const Joi = require("joi")
 
 const schemaFollows = Joi.object( {
     following_user_nickname: Joi.string().min(3).max(50).required().messages({

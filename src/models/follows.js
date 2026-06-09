@@ -11,13 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Follows.belongsTo(models.User, {
-        foreingKey: "nickname",
-        as: "following_user_nickname"
-      }),
-      Follows.belongsToMany(models.User, {
-        foreingKey: "nickname",
-        as: "followed_user_nickname"
-      })
+        foreignKey: "following_user_nickname",
+        as: "followerUser"
+      });
+
+      Follows.belongsTo(models.User, {
+        foreignKey: "followed_user_nickname",
+        as: "followedUser"
+      });
     }
   }
   Follows.init({

@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const followController = require('../controllers/follow.controllers')
 
-const {
+ const {
     validarFollow,
     validarUser,
     validarFollowingUser,

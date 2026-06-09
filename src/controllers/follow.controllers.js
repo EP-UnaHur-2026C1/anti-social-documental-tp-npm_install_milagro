@@ -24,7 +24,7 @@ const obtenerFollowsDeUser = async (req, res) => {
     try {
         const follows = await Follows.findAll({
             where: {
-                following_user_nickname : req.body.following_user_nickname
+                following_user_nickname : req.user
             }
         })
         
@@ -38,7 +38,7 @@ const obtenerFollowsDeUser = async (req, res) => {
         res.status(200).json(followsMapeados)
     }
     catch (error) {
-         res.status(500).json({ error: `Hubo un error al obtener los follows: ${error.message}` })
+            res.status(500).json({ error: `Hubo un error al obtener los follows: ${error.message}` })
     }
 }
 

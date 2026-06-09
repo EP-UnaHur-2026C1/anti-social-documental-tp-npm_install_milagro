@@ -3,13 +3,13 @@ const follows = require('../models/follows');
 
 const obtenerFollows = async (req, res) => {
     try {
-        const follows = await follows.findAll()
+        const follows = await Follows.findAll()
 
         const followsMapeados = follows.map(follow => {
             return {
                 id: follow.id,
-                following_user_nickname: follow.following_user_nickname,
-                followed_user_nickname: followed_user_nickname
+                followingUserNickname: follow.following_user_nickname,
+                followedUserNickname: followed_user_nickname
             }
         })
 

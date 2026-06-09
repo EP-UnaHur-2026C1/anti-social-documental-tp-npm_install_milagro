@@ -12,17 +12,33 @@ const validarFollow = (req, res, next) => {
     next()
 }
 
+const validarUser = async (req,res,next) => {
+    const { user } = req.params
+
+    const following = await  User.findByPk(user, {
+        attributes: ["nickname"]
+    })
+
+    if (!following) {
+        return res.status(404).json({
+            mensaje: 'Usuario inexistente'
+        })
+    }
+
+    next()
+}
+
 const validarFollowingUser = async (req, res, next) => {
-    const nickSeguidor = req.params.user
+    const { following_user_nickname  } = req.body
 
 
     const seguidos = await Follows.findOne({
         where: {
-            following_user_nickname : nickSeguidor
+            following_user_nickname : following_user_nickname 
         }
     })
 
-    const seguidor = await  User.findByPk(nickSeguidor, {
+    const seguidor = await  User.findByPk(following_user_nickname , {
         attributes: ["nickname"]
     })
 
@@ -33,15 +49,15 @@ const validarFollowingUser = async (req, res, next) => {
         })
     }
     
-    req.nicknameSeguidor = nickSeguidor
+    req.following_user_nickname  = following_user_nickname 
 
     next()
 }
 
 const validarFollowedUser = async (req, res, next) => {
-    const {followedUser} = req.params
+    const {followed_user_nickname } = req.body
 
-    const seguido = await User.findByPk(followedUser, {
+    const seguido = await User.findByPk(followed_user_nickname, {
         attributes: ["nickname"]
     })
 
@@ -51,7 +67,7 @@ const validarFollowedUser = async (req, res, next) => {
         })
     }
     
-    req.nicknameSeguido = followedUser
+    req.followed_user_nickname = followed_user_nickname
 
     next()
 }
@@ -59,6 +75,7 @@ const validarFollowedUser = async (req, res, next) => {
 
 module.exports = {
     validarFollow,
+    validarUser,
     validarFollowingUser,
     validarFollowedUser
 }

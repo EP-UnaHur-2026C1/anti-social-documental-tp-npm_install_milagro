@@ -7,8 +7,9 @@ const {
 } = require("../middlewares/comentarios.middlewares")
 
 const router = Router()
-router.get('/:user', validarFollowingUser, followController.obtenerFollows)
-router.post('/:user',validarFollow, validarFollowingUser, validarFollowedUser, followController.crearFollow)
-router.delete('/:user',validarFollow, validarFollowingUser, validarFollowedUser, followController.eliminarFollow)
+router.get('/', followController,followController.obtenerFollows)
+router.get('/:user', validarUser, followController.obtenerFollowsDeUser)
+router.post('/',validarFollow, validarFollowingUser, validarFollowedUser, followController.crearFollow)
+router.delete('/',validarFollow, validarFollowingUser, validarFollowedUser, followController.eliminarFollow)
 
 module.exports = router

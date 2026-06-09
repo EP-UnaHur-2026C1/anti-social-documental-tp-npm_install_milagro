@@ -1,6 +1,26 @@
 const { Follows, User } = require('../models');
+const follows = require('../models/follows');
 
 const obtenerFollows = async (req, res) => {
+    try {
+        const follows = await follows.findAll()
+
+        const followsMapeados = follows.map(follow => {
+            return {
+                id: follow.id,
+                following_user_nickname: follow.following_user_nickname,
+                followed_user_nickname: followed_user_nickname
+            }
+        })
+
+        res.status(200).json(followsMapeados)
+    }
+    catch(error) {
+        res.status(500).json({ error: `Hubo un error al obtener los follows: ${error.message}` })
+    }
+}
+
+const obtenerFollowsDeUser = async (req, res) => {
     try {
         const follows = await Follows.findAll({
             where: {

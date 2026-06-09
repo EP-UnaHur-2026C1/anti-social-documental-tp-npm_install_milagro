@@ -1,10 +1,83 @@
-# Estrategias de Persistencia - Trabajo Práctico 1: Red anti-social
-### integrantes:
- + Dylan Correa
- + Agustin Fernandes
- + Leonardo Murano
- + Tomas Rosales
- + Matias de la Rosa
+# 🚫 Red Anti-Social API
+
+> **Trabajo Práctico 1 - Estrategias de Persistencia** > Universidad Nacional de Hurlingham (UNAHUR)
+
+Una API RESTful desarrollada en Node.js para gestionar una red "anti-social". El sistema permite a los usuarios interactuar mediante publicaciones, comentarios, etiquetas y un sistema completo de seguimiento (followers/following).
+
+### 👥 Integrantes:
+* Dylan Correa
+* Agustin Fernandes
+* Leonardo Murano
+* Tomas Rosales
+* Matias de la Rosa
+
+---
+
+## 🚀 Tecnologías Utilizadas
+* **Backend:** Node.js, Express.js
+* **ORM:** Sequelize
+* **Bases de Datos:** PostgreSQL (Supabase) / SQLite / MySQL
+* **Validaciones:** Joi
+* **Documentación:** Swagger UI
+
+---
+
+## ⚙️ Instalación y Configuración Local
+
+1. **Clonar el repositorio:**
+```bash
+   git clone https://github.com/EP-UnaHur-2026C1/anti-social-relational-tp-npm_install_milagro.git
+   cd tp-anti-social-red
+
+```
+
+2. **Instalar las dependencias:**
+```bash
+npm install
+
+```
+
+
+3. **Configurar las variables de entorno:**
+Crear un archivo `.env` en la raíz del proyecto basándose en la siguiente estructura:
+```env
+PORT=3000
+DB_DIALECT=postgres
+DB_HOST=[TU_HOST_DE_BD]
+DB_USER=postgres
+DB_PASS=[TU_PASSWORD_DE_BD]
+DB_NAME=postgres
+DB_PORT=5432
+
+```
+
+
+4. **Ejecutar el servidor en modo desarrollo:**
+```bash
+npm run dev
+
+```
+
+
+
+---
+
+## 📚 Documentación de la API (Swagger)
+
+La API cuenta con documentación interactiva generada con Swagger. Una vez que el servidor esté corriendo, puedes acceder a la interfaz gráfica y probar los endpoints desde tu navegador:
+
+👉 **[http://localhost:3000/docs](https://www.google.com/search?q=http://localhost:3000/docs)**
+
+---
+
+## 🧪 Colección de Pruebas (Postman)
+
+Para facilitar la corrección y prueba de todos los flujos del sistema (CRUD completo, follows, etc.), se incluye una colección de pruebas estructurada.
+
+* **Archivo de la colección:** `colecciones-de-pruebas.json` (Ubicado en la carpeta `/test`).
+* **Instrucciones:** Importar el archivo JSON en Postman o Insomnia para tener acceso a todos los endpoints pre-configurados con sus respectivos payloads (body).
+
+---
 
 ## 💾 Arquitectura de Persistencia y Base de Datos
 

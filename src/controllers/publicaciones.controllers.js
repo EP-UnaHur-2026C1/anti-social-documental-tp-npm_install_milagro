@@ -9,13 +9,18 @@ const obtenerPublicaciones = async (req, res) => {
     */
 
     try {
+
+        /*TODO: cambiar por el de mongo
         const publicaciones = await Post.findAll({
             include: {
                 model: User,
                 as: 'user'
             }
         })
+        */
 
+
+        //quizas esta perte cambie o no se use fijarse en la respuesta tambien
         const publicacionesMapeadas = publicaciones.map(publi => {
             return {
                 id: publi.id ,
@@ -87,11 +92,13 @@ const crearPublicacion = async (req, res) => {
 
     try {
 
+        /*TODO: cambiar por el de mongo
         const publicacion = await Post.create({
             user_nickname: req.body.user_nickname,
             text: req.body.text,
             description: req.body.description
         })
+        */
 
         res.status(201).json(publicacion)
 
@@ -132,6 +139,7 @@ const editarPublicacion = async (req, res) => {
 
 
     try {
+        /*TODO: cambiar por el de mongo
         const {id} = req.publicacion
 
         await Post.update({
@@ -141,7 +149,7 @@ const editarPublicacion = async (req, res) => {
             where: {
                 id: id
             }
-        })
+        })*/
 
         res.status(200).json("Publicacion actualizada con exito")
 
@@ -169,6 +177,7 @@ const eliminarPublicacion = async (req, res) => {
 
 
     try {
+        /*TODO: cambiar por el de mongo
         const {id} = req.publicacion
 
         await Post.destroy({
@@ -176,6 +185,7 @@ const eliminarPublicacion = async (req, res) => {
                 id: id
             }
         })
+        */
 
         res.status(200).json("Publicacion eliminada")
 

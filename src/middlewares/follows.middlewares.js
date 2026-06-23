@@ -15,9 +15,10 @@ const validarEsquemaFollow = (req, res, next) => {
 const validarUsuarioExistente = async (req, res, next) => {
     const { user } = req.params
 
+    /*TODO: cambiar por el de mongo
     const seguido = await User.findByPk(user, {
         attributes: ["nickname"]
-    })
+    })*/
 
     if (!seguido) {
         return res.status(404).json({
@@ -33,9 +34,10 @@ const validarUsuarioExistente = async (req, res, next) => {
 const validarFollowedUser = async (req, res, next) => {
     const {followed_user_nickname } = req.body
 
+    /*TODO: cambiar por el de mongo
     const seguido = await User.findByPk(followed_user_nickname, {
         attributes: ["nickname"]
-    })
+    })*/
 
     if (!seguido) {
         return res.status(404).json({
@@ -52,12 +54,13 @@ const validarConexionExistente = async (req, res, next) => {
     const { followed_user_nickname } = req.body;
     const following_user_nickname = req.user;
 
+    /*TODO: cambiar por el de mongo
     const conexion = await Follows.findOne({
         where: {
             following_user_nickname,
             followed_user_nickname
         }
-    });
+    });*/
 
     if (conexion) {
         return res.status(400).json({ mensaje: "El seguimiento ya existe." });
@@ -72,12 +75,14 @@ const validarConexionInexistente = async (req, res, next) => {
     const { followed_user_nickname } = req.body;
     const following_user_nickname = req.user;
 
+    /*TODO: cambiar por el de mongo
     const conexion = await Follows.findOne({
         where: {
             following_user_nickname,
             followed_user_nickname
         }
     });
+    */
 
     if (!conexion) {
         return res.status(400).json({ mensaje: "No existe el seguimiento para eliminar" });

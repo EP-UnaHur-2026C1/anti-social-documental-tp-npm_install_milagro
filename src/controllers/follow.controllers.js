@@ -13,8 +13,12 @@ const obtenerFollows = async (req, res) => {
     */
 
     try {
+        /*TODO: cambiar por el de mongo
         const follows = await Follows.findAll()
+        */
 
+
+        //quizas esta perte cambie o no se use fijarse en la respuesta tambien
         const followsMapeados = follows.map(follow => {
             return {
                 id: follow.id,
@@ -49,12 +53,16 @@ const obtenerFollowsDeUser = async (req, res) => {
 
 
     try {
+
+        /*TODO: cambiar por el de mongo
         const follows = await Follows.findAll({
             where: {
                 following_user_nickname : req.user
             }
-        })
+        })*/
         
+
+        //quizas esta perte cambie o no se use fijarse en la respuesta tambien
         const followsMapeados = follows.map(follow => {
             return {
                 id: follow.id ,
@@ -106,10 +114,11 @@ const crearFollow = async (req, res) => {
 
     try {
 
+        /*TODO: cambiar por el de mongo
         const seguido = await Follows.create({
             following_user_nickname: req.user,
             followed_user_nickname: req.followed_user_nickname
-        })
+        })*/
 
         res.status(201).json(seguido)
 
@@ -154,12 +163,16 @@ const eliminarFollow = async (req, res) => {
 
 
     try {
+
+        /*TODO: cambiar por el de mongo
         await Follows.destroy({
             where: {
                 following_user_nickname: req.user,
                 followed_user_nickname: req.followed_user_nickname
             }
-        })
+        })*/
+
+            
         res.status(201).json("seguimiento eliminado")
     } catch (error) {
         res.status(500).json({ error: `Hubo un error al eliminar el follow: ${error.message}` })

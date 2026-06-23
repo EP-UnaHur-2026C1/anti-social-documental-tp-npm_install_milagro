@@ -10,7 +10,11 @@ const obtenerEtiquetas = async (req, res) => {
 
 
     try {
+
+        /*TODO: cambiar por el de mongo
         const etiquetas = await Tag.findAll()
+        */
+        
         res.status(200).json(etiquetas)
     } catch (error) {
         res.status(500).json({ error: `Hubo un error a la hora de obtener las etiquetas: ${error.message}` })
@@ -70,9 +74,11 @@ const crearEtiqueta = async (req, res) => {
 
 
     try {
+
+        /*TODO: cambiar por el de mongo
         const etiqueta = await Tag.create({
             name: req.body.name
-        })
+        })*/
 
         res.status(201).json(etiqueta)
 
@@ -113,6 +119,8 @@ const editarEtiqueta = async (req, res) => {
 
 
     try {
+
+        /*TODO: cambiar por el de mongo
         const {id} = req.etiqueta
 
         await Tag.update({
@@ -121,7 +129,7 @@ const editarEtiqueta = async (req, res) => {
             where: {
                 id: id
             }
-        })
+        })*/
 
         res.status(200).json({mensaje: "Etiqueta actualizada exitosamente"})
 
@@ -149,13 +157,15 @@ const eliminarEtiqueta = async (req, res) => {
 
 
     try {
+
+        /*TODO: cambiar por el de mongo
         const {id} = req.etiqueta
 
         await Tag.destroy({
             where: {
                 id: id
             }
-        })
+        })*/
 
         res.status(200).json({ mensaje: 'Etiqueta eliminada exitosamente'})
 

@@ -16,7 +16,9 @@ const validarComentarioId = async (req, res, next) => {
 
     const { id } = req.params
 
+    /* TODO: cambiar por el de mongo
     const comentario = await Comment.findByPk(id)
+    */
 
     if (!comentario) {
         return res.status(404).json({
@@ -33,12 +35,14 @@ const validarPublicacionYComentarioId = async (req, res, next) => {
 
     const { postId, comentarioId } = req.params
 
+    /* TODO: cambiar por el de mongo
     const comentario = await Comment.findOne({
         where: {
             id: comentarioId,
             post_id: postId
         }
     })
+    */
 
     if (!comentario) {
         return res.status(404).json({

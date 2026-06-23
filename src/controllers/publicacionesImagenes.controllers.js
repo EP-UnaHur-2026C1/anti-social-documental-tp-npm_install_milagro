@@ -31,12 +31,14 @@ const agregarImagenAPost = async (req, res) => {
 
     try {
 
+        /*TODO: cambiar por el de mongo
         const {id} = req.publicacion
 
         const imagen = await Post_image.create({
             url: req.body.url,
             post_id: id
         })
+        */
 
         res.status(201).json(imagen)
 
@@ -65,6 +67,7 @@ const obtenerImagenesDeUnPost = async (req, res) => {
 
     try {
 
+        /*TODO: cambiar por el de mongo
         const {id} = req.publicacion
 
         const imagenes = await Post_image.findAll({
@@ -73,7 +76,9 @@ const obtenerImagenesDeUnPost = async (req, res) => {
                 post_id: id
             }
         })
+        */
 
+        //quizas esta perte cambie o no se use fijarse en la respuesta tambien
         const return_final = {
             publicacion_id: id,
             imagenes: imagenes
@@ -111,13 +116,14 @@ const eliminarImagen = async (req, res) => {
 
     try {
 
+        /*TODO: cambiar por el de mongo
         const {id} = req.imagen
 
         await Post_image.destroy({
             where: {
                 id: id
             }
-        })
+        })*/
 
         res.status(200).json("Imagen eliminada con exito")
 

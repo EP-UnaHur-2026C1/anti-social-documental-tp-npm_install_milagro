@@ -13,9 +13,10 @@ const validarEtiquetaSchema = (req, res, next) => {
 const validarEtiquetaId = async (req, res, next) => {
     const {id} = req.params
 
-
+    /* TODO: Cambiar por el de Mongo
     const etiqueta = await Tag.findByPk(id)
-    
+    */
+
     if (!etiqueta) {
         return res.status(404).json({
             mensaje: 'Etiqueta no encontrada'

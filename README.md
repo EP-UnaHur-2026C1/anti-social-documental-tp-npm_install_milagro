@@ -15,9 +15,8 @@ Una API RESTful desarrollada en Node.js para gestionar una red "anti-social". El
 
 ## 🚀 Tecnologías Utilizadas
 * **Backend:** Node.js, Express.js
-* **ORM:** Sequelize
-* **Bases de Datos:** PostgreSQL (Supabase) / SQLite / MySQL
-* **Validaciones:** Joi
+* **ODM:** Mongoose
+* **Bases de Datos:** MongoDB
 * **Documentación:** Swagger UI
 
 ---
@@ -41,13 +40,6 @@ npm install
 3. **Configurar las variables de entorno:**
 Crear un archivo `.env` en la raíz del proyecto basándose en la siguiente estructura:
 ```env
-PORT=3000
-DB_DIALECT=postgres
-DB_HOST=[TU_HOST_DE_BD]
-DB_USER=postgres
-DB_PASS=[TU_PASSWORD_DE_BD]
-DB_NAME=postgres
-DB_PORT=5432
 
 ```
 

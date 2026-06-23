@@ -62,6 +62,7 @@ const obtenerEtiquetasDePost = async (req, res) => {
     */
 
     try {
+        /*TODO: cambiar por el de mongo
         const {id} = req.publicacion
 
         const etiquetas = await Post.findByPk(id, {
@@ -74,8 +75,9 @@ const obtenerEtiquetasDePost = async (req, res) => {
                     attributes: []
                 }
             }
-        })
+        })*/
 
+        //quizas esta perte cambie o no se use fijarse en la respuesta tambien
         const etiquetasMapeadas = etiquetas.tags.map(e => e.name)
         const return_final = {
             publicacion_id: id,

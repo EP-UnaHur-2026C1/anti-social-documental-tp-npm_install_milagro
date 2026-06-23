@@ -13,9 +13,10 @@ const validarUsuarioSchema = (req, res, next) => {
 const validarUsuarioId = async (req, res, next) => {
     const { id } = req.params
 
+    /*TODO: cambiar por el de mongo
     const usuario = await User.findByPk(id, {
         attributes: ["nickname"]
-    })
+    })*/
 
     if (!usuario) {
         return res.status(404).json({
@@ -33,8 +34,11 @@ const validarUsuarioId = async (req, res, next) => {
 const validarUsuarioExistenteEnBody = async (req, res, next) => {
     const { user_nickname } = req.body;
     
+    /*TODO: cambiar por el de mongo
     const usuario = await User.findByPk(user_nickname);
-    
+    */
+
+
     if (!usuario) {
         return res.status(404).json({
             mensaje: 'No se puede crear la publicación: el usuario no existe en la base de datos'

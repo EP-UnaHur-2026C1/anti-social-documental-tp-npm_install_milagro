@@ -16,7 +16,9 @@ const validarPublicacionId = async (req, res, next) => {
 
     const { id } = req.params
 
+    /*TODO: cambiar por el de mongo
     const publicacion = await Post.findByPk(id)
+    */
 
     if (!publicacion) {
         return res.status(404).json({

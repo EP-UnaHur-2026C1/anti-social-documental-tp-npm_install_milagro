@@ -10,7 +10,11 @@ const obtenerUsuarios = async (req, res) => {
 
 
     try {
+
+        /*TODO: cambiar por el de mongo
         const usuarios = await User.findAll()
+        */
+    
         res.status(200).json(usuarios)
     } catch (error) {
         res.status(500).json({ error: `Hubo un error a la hora de obtener los usuarios: ${error.message}` })
@@ -69,9 +73,11 @@ const crearUsuario = async (req, res) => {
 
 
     try {
+
+        /*TODO: cambiar por el de mongo
         const usuario = await User.create({
             nickname: req.body.nickname
-        })
+        })*/
 
         res.status(201).json(usuario)
 
@@ -116,6 +122,7 @@ const editarUsuario = async (req, res) => {
         //nickname validado viejo
         const {nickname} = req.usuario
 
+        /*TODO: cambiar por el de mongo
         await User.update({
             nickname: req.body.nickname //nickname nuevo
             }, {
@@ -123,7 +130,7 @@ const editarUsuario = async (req, res) => {
                     nickname: nickname //matchear con el viejo
                 }
             }
-        );
+        );*/
 
         res.status(200).json("Usuario actualizado con exito")
 
@@ -154,11 +161,12 @@ const eliminarUsuario = async (req, res) => {
 
         const {nickname} = req.usuario
 
+        /*TODO: cambiar por el de mongo
         await User.destroy({
             where: {
                 nickname: nickname
             }
-        })
+        })*/
 
         res.status(200).json({
             mensaje: 'Usuario eliminado exitosamente'

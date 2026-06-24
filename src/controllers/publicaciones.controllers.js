@@ -1,4 +1,4 @@
-const { Post, User } = require('../models')
+const Post = require('../models/Post')
 
 const obtenerPublicaciones = async (req, res) => {
     /* #swagger.tags = ['Publicaciones']
@@ -9,16 +9,7 @@ const obtenerPublicaciones = async (req, res) => {
     */
 
     try {
-
-        /*TODO: cambiar por el de mongo
-        const publicaciones = await Post.findAll({
-            include: {
-                model: User,
-                as: 'user'
-            }
-        })
-        */
-
+        const publicaciones = await Post.find().populate("user_nickname", "nickname")
 
         //quizas esta perte cambie o no se use fijarse en la respuesta tambien
         const publicacionesMapeadas = publicaciones.map(publi => {
@@ -26,7 +17,7 @@ const obtenerPublicaciones = async (req, res) => {
                 id: publi.id ,
                 text: publi.text,
                 description: publi.description,
-                user_nickname: publi.user_nickname
+                user_nickname: publi.user_nickname?.nickname || publi.user_nickname
             }
         })
 
@@ -92,13 +83,11 @@ const crearPublicacion = async (req, res) => {
 
     try {
 
-        /*TODO: cambiar por el de mongo
         const publicacion = await Post.create({
-            user_nickname: req.body.user_nickname,
-            text: req.body.text,
-            description: req.body.description
+        user_nickname: req.body.user_nickname,
+        text: req.body.text,
+        description: req.body.description
         })
-        */
 
         res.status(201).json(publicacion)
 
@@ -139,17 +128,14 @@ const editarPublicacion = async (req, res) => {
 
 
     try {
-        /*TODO: cambiar por el de mongo
-        const {id} = req.publicacion
+        const { _id } = req.publicacion
 
-        await Post.update({
-            text: req.body.text,
-            description: req.body.description
-        }, {
-            where: {
-                id: id
-            }
-        })*/
+        await Post.findByIdAndUpdate(_id,
+       {
+         text: req.body.text,
+         description: req.body.description
+       }
+       )
 
         res.status(200).json("Publicacion actualizada con exito")
 
@@ -177,15 +163,9 @@ const eliminarPublicacion = async (req, res) => {
 
 
     try {
-        /*TODO: cambiar por el de mongo
-        const {id} = req.publicacion
+        const { _id } = req.publicacion
 
-        await Post.destroy({
-            where: {
-                id: id
-            }
-        })
-        */
+        await Post.findByIdAndDelete(_id)
 
         res.status(200).json("Publicacion eliminada")
 

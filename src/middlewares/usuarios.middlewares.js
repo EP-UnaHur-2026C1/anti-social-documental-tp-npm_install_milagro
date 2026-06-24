@@ -1,51 +1,65 @@
-const {User} = require("../models")
+const User = require("../models/User")
 const schemaUsuarios = require("../schema/usuarios.schema")
 
 const validarUsuarioSchema = (req, res, next) => {
-    const {error} = schemaUsuarios.validate(req.body)
+    const { error } = schemaUsuarios.validate(req.body)
+
     if (error) {
-        return res.status(400).json({error: `El body no cumple con los parametros solicitados: ${error.details[0].message}`})
+        return res.status(400).json({
+            error: `El body no cumple con los parametros solicitados: ${error.details[0].message}`
+        })
     }
 
     next()
 }
 
 const validarUsuarioId = async (req, res, next) => {
-    const { id } = req.params
+    try {
+        const { id } = req.params
 
-    /*TODO: cambiar por el de mongo
-    const usuario = await User.findByPk(id, {
-        attributes: ["nickname"]
-    })*/
+        const usuario = await User.findOne({
+            nickname: id
+        }).select("nickname")
 
-    if (!usuario) {
-        return res.status(404).json({
-            mensaje: 'Usuario no encontrado'
+        if (!usuario) {
+            return res.status(404).json({
+                mensaje: "Usuario no encontrado"
+            })
+        }
+
+        req.usuario = usuario
+
+        next()
+
+    } catch (error) {
+        return res.status(500).json({
+            error: error.message
         })
     }
-    
-
-    // Lo devolvemos para que lo use el controller, osea, ya esta validado aca
-    req.usuario = usuario
-
-    next()
 }
 
 const validarUsuarioExistenteEnBody = async (req, res, next) => {
-    const { user_nickname } = req.body;
-    
-    /*TODO: cambiar por el de mongo
-    const usuario = await User.findByPk(user_nickname);
-    */
+    try {
+        const { user_nickname } = req.body
 
+        const usuario = await User.findOne({
+            nickname: user_nickname
+        })
 
-    if (!usuario) {
-        return res.status(404).json({
-            mensaje: 'No se puede crear la publicación: el usuario no existe en la base de datos'
-        });
+        if (!usuario) {
+            return res.status(404).json({
+                mensaje: "No se puede crear la publicación: el usuario no existe en la base de datos"
+            })
+        }
+
+        next()
+
+    } catch (error) {
+        return res.status(500).json({
+            error: error.message
+        })
     }
-    next();
-};
+}
 
 module.exports = {
     validarUsuarioId,

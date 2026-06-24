@@ -1,5 +1,4 @@
-const { Comment, User } = require('../models')
-const { Op } = require('sequelize');
+const Comment = require('../models/Comment')
 
 const obtenerComentarios = async (req, res) => {
     /* #swagger.tags = ['Comentarios']
@@ -10,9 +9,9 @@ const obtenerComentarios = async (req, res) => {
     */
 
     try {
-        /*TODO: cambiar por el de mongo
-        const comentarios = await Comment.findAll()
-        */
+        const comentarios = await Comment.find()
+        .populate("user_nickname", "nickname")
+        .populate("post_id")
 
         res.status(200).json(comentarios)
     } catch (error) {
@@ -68,35 +67,23 @@ const obtenerComentariosDeUnPost = async (req, res) => {
 
 
     try {
-        /*TODO: cambiar por el de mongo
-        const {id} = req.publicacion
-        */
+        const { _id } = req.publicacion
 
         const mesesLimite = parseInt(process.env.MESES_LIMITE) || 6; 
         const fechaLimite = new Date();
         fechaLimite.setMonth(fechaLimite.getMonth() - mesesLimite);
 
-        /*TODO: cambiar por el de mongo
-        const comentarios = await Comment.findAll({
-            attributes: ["text"], 
-            where: {
-                post_id: id,
-                is_visible: true,
-                createdAt: { [Op.gte]: fechaLimite }
-            },
-            include: [{
-                model: User,
-                as: "user",
-                attributes: ["nickname"]
-            }]
-        });
-        */
+        const comentarios = await Comment.find({
+        post_id: _id,
+        is_visible: true,
+        createdAt: { $gte: fechaLimite }
+     }).populate("user_nickname", "nickname")
 
 
         //puede llegar a cambiar o no usarse esta parte
         const return_final = comentarios.map(c => ({
             text: c.text,
-            nickname: c.user.nickname || "Usuario desconocido"
+            nickname: c.user_nickname?.nickname || "Usuario desconocido"
             })
         )
 
@@ -134,17 +121,14 @@ const crearComentarioEnPost = async (req, res) => {
 
 
     try {
-        /*TODO: cambiar por el de mongo
-        const {id} = req.publicacion
-        
         const comentario = await Comment.create({
-            text: req.body.text,
-            is_visible: req.body.is_visible,
-            user_nickname:  req.body.user_nickname,
-            post_id: id
-        })*/
+        text: req.body.text,
+        is_visible: req.body.is_visible,
+        user_nickname: req.body.user_nickname,
+        post_id: req.publicacion._id
+     })
 
-        res.status(201).json(comentario)
+      res.status(201).json(comentario)
 
     } catch (error) {
         res.status(500).json({ error: `Hubo un error a la hora de crear un comentario: ${error.message}` })
@@ -184,19 +168,16 @@ const editarComentario = async (req, res) => {
 
 
     try {
-        /*TODO: cambiar por el de mongo
-        const {id} = req.comentario
-
-        
-        await Comment.update({
-            text: req.body.text,
-            is_visible: req.body.is_visible
-        }, {
-            where: {
-                id:id
-            }
-        })
-        */
+        await Comment.findByIdAndUpdate(
+        req.comentario._id,
+      {
+        text: req.body.text,
+        is_visible: req.body.is_visible
+      },
+      {
+        new: true
+      }
+     )
 
         res.status(200).json({ mensaje: `Comentario actualizado con exito` })
 
@@ -224,15 +205,9 @@ const eliminarComentario = async (req, res) => {
     
 
     try {
-        /*TODO: cambiar por el de mongo
-        const {id} = req.comentario
-
-        await Comment.destroy({
-            where: {
-                id: id
-            }
-        })
-        */
+        await Comment.findByIdAndDelete(
+        req.comentario._id
+        )
 
         res.status(200).json({
             mensaje: 'Comentario eliminado'
@@ -268,16 +243,13 @@ const eliminarComentarioDeUnPost = async (req, res) => {
     
 
     try {
-        const {id} = req.comentario //TODO: cambiar por el de mongo
-        const postId = req.publicacion // Deberia quedar asi
+        const comentarioId = req.comentario._id
+        const postId = req.publicacion._id
 
-        /*TODO: cambiar por el de mongo
-        await Comment.destroy({
-            where: {
-                id: id,
-                post_id: postId
-            }
-        })*/
+        await Comment.findOneAndDelete({
+        _id: comentarioId,
+        post_id: postId
+        })
 
         res.status(200).json({
             mensaje: 'Comentario eliminado'

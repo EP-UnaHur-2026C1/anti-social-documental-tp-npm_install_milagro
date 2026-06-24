@@ -1,12 +1,15 @@
-const { Comment } = require('../models')
+const mongoose = require("mongoose")
+const Comment = require("../models/Comment")
 const schemaComentarios = require("../schema/comentarios.schema")
-
 
 const validarComentario = (req, res, next) => {
 
-    const {error} = schemaComentarios.validate(req.body)
+    const { error } = schemaComentarios.validate(req.body)
+
     if (error) {
-        return res.status(400).json({error: `El body no cumple con los parametros solicitados: ${error.details[0].message}`})
+        return res.status(400).json({
+            error: `El body no cumple con los parametros solicitados: ${error.details[0].message}`
+        })
     }
 
     next()
@@ -14,46 +17,76 @@ const validarComentario = (req, res, next) => {
 
 const validarComentarioId = async (req, res, next) => {
 
-    const { id } = req.params
+    try {
 
-    /* TODO: cambiar por el de mongo
-    const comentario = await Comment.findByPk(id)
-    */
+        const { id } = req.params
 
-    if (!comentario) {
-        return res.status(404).json({
-            mensaje: 'Comentario no encontrado'
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({
+                mensaje: "Id de comentario inválido"
+            })
+        }
+
+        const comentario = await Comment.findById(id)
+
+        if (!comentario) {
+            return res.status(404).json({
+                mensaje: "Comentario no encontrado"
+            })
+        }
+
+        req.comentario = comentario
+
+        next()
+
+    } catch (error) {
+
+        res.status(500).json({
+            error: error.message
         })
+
     }
 
-    req.comentario = comentario
-
-    next()
 }
 
 const validarPublicacionYComentarioId = async (req, res, next) => {
 
-    const { postId, comentarioId } = req.params
+    try {
 
-    /* TODO: cambiar por el de mongo
-    const comentario = await Comment.findOne({
-        where: {
-            id: comentarioId,
-            post_id: postId
+        const { postId, comentarioId } = req.params
+
+        if (
+            !mongoose.Types.ObjectId.isValid(postId) ||
+            !mongoose.Types.ObjectId.isValid(comentarioId)
+        ) {
+            return res.status(400).json({
+                mensaje: "Id inválido"
+            })
         }
-    })
-    */
 
-    if (!comentario) {
-        return res.status(404).json({
-            mensaje: 'Comentario no encontrado o no esta en este post'
+        const comentario = await Comment.findOne({
+            _id: comentarioId,
+            post_id: postId
         })
+
+        if (!comentario) {
+            return res.status(404).json({
+                mensaje: "Comentario no encontrado o no pertenece a ese post"
+            })
+        }
+
+        req.comentario = comentario
+
+        next()
+
+    } catch (error) {
+
+        res.status(500).json({
+            error: error.message
+        })
+
     }
 
-    req.comentario = comentario
-    req.publicacion = postId
-
-    next()
 }
 
 module.exports = {

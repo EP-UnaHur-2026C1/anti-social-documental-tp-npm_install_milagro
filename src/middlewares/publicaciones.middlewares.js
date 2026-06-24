@@ -1,12 +1,15 @@
-const { Post } = require('../models')
+const mongoose = require("mongoose")
+const Post = require("../models/Post")
 const schemaPublicaciones = require("../schema/publicaciones.schema")
-
 
 const validarPublicacion = (req, res, next) => {
 
-    const {error} = schemaPublicaciones.validate(req.body)
+    const { error } = schemaPublicaciones.validate(req.body)
+
     if (error) {
-        return res.status(400).json({error: `El body no cumple con los parametros solicitados: ${error.details[0].message}`})
+        return res.status(400).json({
+            error: `El body no cumple con los parametros solicitados: ${error.details[0].message}`
+        })
     }
 
     next()
@@ -14,21 +17,36 @@ const validarPublicacion = (req, res, next) => {
 
 const validarPublicacionId = async (req, res, next) => {
 
-    const { id } = req.params
+    try {
 
-    /*TODO: cambiar por el de mongo
-    const publicacion = await Post.findByPk(id)
-    */
+        const { id } = req.params
 
-    if (!publicacion) {
-        return res.status(404).json({
-            mensaje: 'Publicación no encontrada'
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({
+                mensaje: "Id de publicación inválido"
+            })
+        }
+
+        const publicacion = await Post.findById(id)
+
+        if (!publicacion) {
+            return res.status(404).json({
+                mensaje: "Publicación no encontrada"
+            })
+        }
+
+        req.publicacion = publicacion
+
+        next()
+
+    } catch (error) {
+
+        return res.status(500).json({
+            error: `Hubo un error al validar la publicación: ${error.message}`
         })
+
     }
 
-    req.publicacion = publicacion
-
-    next()
 }
 
 module.exports = {

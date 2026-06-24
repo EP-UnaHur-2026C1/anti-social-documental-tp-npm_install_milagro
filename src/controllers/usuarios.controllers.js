@@ -70,8 +70,9 @@ const crearUsuario = async (req, res) => {
 
     try {
         const usuario = await User.create({
-        nickname: req.body.nickname
-        })
+        nickname: req.body.nickname,
+        password: req.body.password
+       })
         res.status(201).json(usuario)
 
     } catch (error) {
@@ -114,10 +115,13 @@ const editarUsuario = async (req, res) => {
         //nickname validado viejo
         const {nickname} = req.usuario
 
-        await User.findOneAndUpdate(
-        { nickname: nickname },
-        { nickname: req.body.nickname }
-        )
+        await User.findByIdAndUpdate(
+        req.usuario._id,
+        {
+        nickname: req.body.nickname,
+        password: req.body.password
+        }
+      )
         res.status(200).json("Usuario actualizado con exito")
 
     } catch (error) {

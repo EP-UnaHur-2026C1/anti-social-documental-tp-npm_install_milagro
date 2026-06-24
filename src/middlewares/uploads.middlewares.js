@@ -1,0 +1,44 @@
+const multer = require('multer');
+const path = require('path');
+
+const almacenamientoDeImagenes = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/');
+    },
+    filename: function (req, file, cb) {
+        // usamos fecha de ahora
+        const nombreUnico = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + path.extname(file.originalname));
+    }
+});
+
+// solo aceptamos imgs sino no
+const filtrosImagenes = (req, file, cb) => {
+    const archivosPermitidos = ['image/jpeg', 'image/png', 'image/webp']
+
+    if (archivosPermitidos.includes(file.mimetype)) {
+        cb(null, true);
+    } else {
+        cb(new Error('El archivo no es una imagen válida'), false);
+    }
+};
+
+const upload = multer({ 
+    storage: almacenamientoDeImagenes,
+    fileFilter: filtrosImagenes,
+    limits: { fileSize: 5 * 1024 * 1024 } // son 5 MB
+});
+
+
+const validarArchivoExistente = (req, res, next) => {
+    if (!req.file) {
+        return res.status(400).json({ mensaje: "No se proporcionó ninguna imagen" });
+    }
+    next();
+};
+
+
+module.exports = {
+    upload,
+    validarArchivoExistente
+}

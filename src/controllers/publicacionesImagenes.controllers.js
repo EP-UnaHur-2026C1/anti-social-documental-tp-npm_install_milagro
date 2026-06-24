@@ -30,17 +30,18 @@ const agregarImagenAPost = async (req, res) => {
 
 
     try {
+        const publicacion = req.publicacion
 
-        /*TODO: cambiar por el de mongo
-        const {id} = req.publicacion
+        const imageUrl = `/uploads/${req.file.filename}`;
 
-        const imagen = await Post_image.create({
-            url: req.body.url,
-            post_id: id
-        })
-        */
+        publicacion.imagenes.push(imageUrl)
+        await publicacion.save()
 
-        res.status(201).json(imagen)
+        res.status(200).json({
+            mensaje: "Imagen agregada correctamente",
+            publicacion_id: publicacion._id,
+            nueva_imagen: imageUrl
+        });
 
     } catch (error) {
         res.status(500).json({ error: `Hubo un error a la hora de crear la imagen: ${error.message}` })

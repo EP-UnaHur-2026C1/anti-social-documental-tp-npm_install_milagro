@@ -27,6 +27,13 @@ const {
 
 const { validarUsuarioExistenteEnBody } = require("../middlewares/usuarios.middlewares");
 
+// midleware del multer paara subida de imagenes
+
+const {
+    upload,
+    validarArchivoExistente
+} = require('../middlewares/upload.middleware');
+
 const router = Router()
 
 router.get('/', publicacionesController.obtenerPublicaciones)
@@ -43,7 +50,7 @@ router.post('/:postId/etiquetas/:tagId', validarPublicacionIdYEtiquetaId, postTa
 
 // Relacion Post - Post_Image
 router.get('/:id/imagenes', validarPublicacionId, postImagesController.obtenerImagenesDeUnPost)
-router.post('/:id/imagenes', validarPublicacionId, validarImagen, postImagesController.agregarImagenAPost)
+router.post('/:id/imagenes', validarPublicacionId, validarImagen, upload.single('imagen'), validarArchivoExistente, postImagesController.agregarImagenAPost)
 router.delete('/:postId/imagenes/:imageId', validarPublicacionEImagenId, postImagesController.eliminarImagen);
 
 

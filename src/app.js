@@ -31,6 +31,8 @@ app.use("/seguidos", routerFollows);
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerFile));
 
 
+app.use('/uploads', express.static('uploads'));
+
 conectarRedis();
 conectarDB(); 
 

@@ -1,7 +1,7 @@
 {
 	"info": {
-		"name": "TP-AntiSocial-Red (Final)",
-		"description": "Colección completa de pruebas para la API RESTful, incluyendo el sistema de seguidores (Follows).",
+		"name": "TP2-AntiSocial-NoSQL",
+		"description": "Colección de pruebas para la API RESTful migrada a MongoDB (Mongoose).",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -50,7 +50,7 @@
 					}
 				},
 				{
-					"name": "Obtener Usuario por ID",
+					"name": "Obtener Usuario por Nickname",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -156,18 +156,18 @@
 					}
 				},
 				{
-					"name": "Obtener Etiqueta por ID",
+					"name": "Obtener Etiqueta por Mongo ID",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/etiquetas/1",
+							"raw": "{{base_url}}/etiquetas/REEMPLAZAR_POR_ID_MONGO",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"etiquetas",
-								"1"
+								"REEMPLAZAR_POR_ID_MONGO"
 							]
 						}
 					}
@@ -184,16 +184,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Programacion\"\n}"
+							"raw": "{\n    \"name\": \"Programacion NoSQL\"\n}"
 						},
 						"url": {
-							"raw": "{{base_url}}/etiquetas/1",
+							"raw": "{{base_url}}/etiquetas/REEMPLAZAR_POR_ID_MONGO",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"etiquetas",
-								"1"
+								"REEMPLAZAR_POR_ID_MONGO"
 							]
 						}
 					}
@@ -204,13 +204,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/etiquetas/1",
+							"raw": "{{base_url}}/etiquetas/REEMPLAZAR_POR_ID_MONGO",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"etiquetas",
-								"1"
+								"REEMPLAZAR_POR_ID_MONGO"
 							]
 						}
 					}
@@ -248,7 +248,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user_nickname\": \"tizi\",\n    \"text\": \"Este es mi primer post en la red\",\n    \"description\": \"Probando la API en el TP\"\n}"
+							"raw": "{\n    \"user_nickname\": \"tizi\",\n    \"text\": \"Este es mi primer post guardado en MongoDB\",\n    \"description\": \"Probando Mongoose en el TP2\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/publicaciones",
@@ -262,18 +262,18 @@
 					}
 				},
 				{
-					"name": "Obtener Publicacion por ID",
+					"name": "Obtener Publicacion por Mongo ID",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/publicaciones/1",
+							"raw": "{{base_url}}/publicaciones/REEMPLAZAR_POR_ID_MONGO",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"publicaciones",
-								"1"
+								"REEMPLAZAR_POR_ID_MONGO"
 							]
 						}
 					}
@@ -290,16 +290,16 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user_nickname\": \"tizi\",\n    \"text\": \"Post editado exitosamente\",\n    \"description\": \"Nueva descripcion\"\n}"
+							"raw": "{\n    \"user_nickname\": \"tizi\",\n    \"text\": \"Post editado exitosamente en Mongo\",\n    \"description\": \"Nueva descripcion\"\n}"
 						},
 						"url": {
-							"raw": "{{base_url}}/publicaciones/1",
+							"raw": "{{base_url}}/publicaciones/REEMPLAZAR_POR_ID_MONGO",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"publicaciones",
-								"1"
+								"REEMPLAZAR_POR_ID_MONGO"
 							]
 						}
 					}
@@ -310,33 +310,15 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/publicaciones/1/etiquetas/1",
+							"raw": "{{base_url}}/publicaciones/ID_PUBLICACION/etiquetas/ID_ETIQUETA",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"publicaciones",
-								"1",
+								"ID_PUBLICACION",
 								"etiquetas",
-								"1"
-							]
-						}
-					}
-				},
-				{
-					"name": "Obtener Etiquetas de Publicacion",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/publicaciones/1/etiquetas",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"publicaciones",
-								"1",
-								"etiquetas"
+								"ID_ETIQUETA"
 							]
 						}
 					}
@@ -353,58 +335,43 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"url\": \"https://ejemplo.com/imagen.png\"\n}"
+							"raw": "{\n    \"url\": \"https://ejemplo.com/imagen_mongo.png\"\n}"
 						},
 						"url": {
-							"raw": "{{base_url}}/publicaciones/1/imagenes",
+							"raw": "{{base_url}}/publicaciones/REEMPLAZAR_POR_ID_MONGO/imagenes",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"publicaciones",
-								"1",
+								"REEMPLAZAR_POR_ID_MONGO",
 								"imagenes"
 							]
 						}
 					}
 				},
 				{
-					"name": "Obtener Imagenes de Publicacion",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/publicaciones/1/imagenes",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"publicaciones",
-								"1",
-								"imagenes"
-							]
-						}
-					}
-				},
-				{
-					"name": "Eliminar Imagen de Publicacion",
+					"name": "Eliminar Publicacion",
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/publicaciones/1/imagenes/1",
+							"raw": "{{base_url}}/publicaciones/REEMPLAZAR_POR_ID_MONGO",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"publicaciones",
-								"1",
-								"imagenes",
-								"1"
+								"REEMPLAZAR_POR_ID_MONGO"
 							]
 						}
 					}
-				},
+				}
+			]
+		},
+		{
+			"name": "4. Comentarios",
+			"item": [
 				{
 					"name": "Crear Comentario en Publicacion",
 					"request": {
@@ -417,80 +384,21 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"text\": \"Este es un comentario de prueba\",\n    \"is_visible\": true,\n    \"user_nickname\": \"tizi\"\n}"
+							"raw": "{\n    \"text\": \"Este es un comentario de prueba en Mongo\",\n    \"is_visible\": true,\n    \"user_nickname\": \"tizi\"\n}"
 						},
 						"url": {
-							"raw": "{{base_url}}/publicaciones/1/comentarios",
+							"raw": "{{base_url}}/publicaciones/REEMPLAZAR_POR_ID_MONGO/comentarios",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"publicaciones",
-								"1",
+								"REEMPLAZAR_POR_ID_MONGO",
 								"comentarios"
 							]
 						}
 					}
 				},
-				{
-					"name": "Obtener Comentarios de Publicacion",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/publicaciones/1/comentarios",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"publicaciones",
-								"1",
-								"comentarios"
-							]
-						}
-					}
-				},
-				{
-					"name": "Eliminar Comentario de Publicacion",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/publicaciones/1/comentarios/1",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"publicaciones",
-								"1",
-								"comentarios",
-								"1"
-							]
-						}
-					}
-				},
-				{
-					"name": "Eliminar Publicacion",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/publicaciones/1",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"publicaciones",
-								"1"
-							]
-						}
-					}
-				}
-			]
-		},
-		{
-			"name": "4. Comentarios",
-			"item": [
 				{
 					"name": "Obtener Todos los Comentarios",
 					"request": {
@@ -508,18 +416,18 @@
 					}
 				},
 				{
-					"name": "Obtener Comentario por ID",
+					"name": "Obtener Comentario por Mongo ID",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/comentarios/1",
+							"raw": "{{base_url}}/comentarios/REEMPLAZAR_POR_ID_MONGO",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"comentarios",
-								"1"
+								"REEMPLAZAR_POR_ID_MONGO"
 							]
 						}
 					}
@@ -539,13 +447,13 @@
 							"raw": "{\n    \"text\": \"Comentario oculto por admin\",\n    \"is_visible\": false,\n    \"user_nickname\": \"tizi\"\n}"
 						},
 						"url": {
-							"raw": "{{base_url}}/comentarios/1",
+							"raw": "{{base_url}}/comentarios/REEMPLAZAR_POR_ID_MONGO",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"comentarios",
-								"1"
+								"REEMPLAZAR_POR_ID_MONGO"
 							]
 						}
 					}
@@ -556,13 +464,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/comentarios/1",
+							"raw": "{{base_url}}/comentarios/REEMPLAZAR_POR_ID_MONGO",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"comentarios",
-								"1"
+								"REEMPLAZAR_POR_ID_MONGO"
 							]
 						}
 					}

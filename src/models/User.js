@@ -4,7 +4,8 @@ const UserSchema = new mongoose.Schema(
   {
     nickname: {
       type: String,
-      required: true,
+      required: [true, "El campo nickname es obligatorio"],
+      trim: true,
       unique: true,
     },
   },

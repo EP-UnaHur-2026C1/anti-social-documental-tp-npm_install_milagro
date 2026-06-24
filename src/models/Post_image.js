@@ -2,12 +2,16 @@ const mongoose = require("mongoose");
 
 const PostImageSchema = new mongoose.Schema(
   {
-    url: String,
+    url: {
+      type: String,
+      required: [true, "El campo url es obligatorio"],
+      trim: true
+    },
 
     post_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Post",
-      required: true,
+      required: [true, "El campo post_id es obligatorio"],
     },
   },
   { timestamps: true }

@@ -4,7 +4,8 @@ const TagSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: [true, "El campo name es obligatorio"],
+      trim: true
     },
   },
   { timestamps: true }

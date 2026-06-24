@@ -1,6 +1,6 @@
 # 🚫 Red Anti-Social API
 
-> **Trabajo Práctico 1 - Estrategias de Persistencia** > Universidad Nacional de Hurlingham (UNAHUR)
+> **Trabajo Práctico 2 - Bases de Datos NoSQL** > Universidad Nacional de Hurlingham (UNAHUR)
 
 Una API RESTful desarrollada en Node.js para gestionar una red "anti-social". El sistema permite a los usuarios interactuar mediante publicaciones, comentarios, etiquetas y un sistema completo de seguimiento (followers/following).
 
@@ -16,7 +16,8 @@ Una API RESTful desarrollada en Node.js para gestionar una red "anti-social". El
 ## 🚀 Tecnologías Utilizadas
 * **Backend:** Node.js, Express.js
 * **ODM:** Mongoose
-* **Bases de Datos:** MongoDB
+* **Bases de Datos:** MongoDB, Redis (Caché)
+* **Infraestructura:** Docker, Docker Compose
 * **Documentación:** Swagger UI
 
 ---
@@ -24,33 +25,36 @@ Una API RESTful desarrollada en Node.js para gestionar una red "anti-social". El
 ## ⚙️ Instalación y Configuración Local
 
 1. **Clonar el repositorio:**
-```bash
-   git clone https://github.com/EP-UnaHur-2026C1/anti-social-relational-tp-npm_install_milagro.git
-   cd tp-anti-social-red
-
-```
+   ```bash
+      git clone [https://github.com/EP-UnaHur-2026C1/anti-social-relational-tp-npm_install_milagro.git](https://github.com/EP-UnaHur-2026C1/anti-social-relational-tp-npm_install_milagro.git)
+      cd tp-anti-social-red
+   ```
 
 2. **Instalar las dependencias:**
-```bash
-npm install
-
-```
-
+   ```bash
+      npm install
+   ```
 
 3. **Configurar las variables de entorno:**
 Crear un archivo `.env` en la raíz del proyecto basándose en la siguiente estructura:
-```env
+   ```env
+   PORT=3000
+   MONGO_URI=mongodb://admin:admin1234@127.0.0.1:27017/socialred?authSource=admin
+   REDIS_URI=redis://127.0.0.1:6379
 
-```
+   ```
 
+4. **Levantar los servicios de Base de Datos (Docker):**
+Asegúrate de tener Docker corriendo e inicia los contenedores de MongoDB, Mongo Express y Redis:
+   ```bash
+   docker compose up -d
 
-4. **Ejecutar el servidor en modo desarrollo:**
-```bash
-npm run dev
+   ```
 
-```
-
-
+5. **Ejecutar el servidor en modo desarrollo:**
+   ```bash
+   npm run dev
+   ```
 
 ---
 
@@ -59,6 +63,8 @@ npm run dev
 La API cuenta con documentación interactiva generada con Swagger. Una vez que el servidor esté corriendo, puedes acceder a la interfaz gráfica y probar los endpoints desde tu navegador:
 
 👉 **[http://localhost:3000/docs](https://www.google.com/search?q=http://localhost:3000/docs)**
+
+*(Nota: También puedes acceder al panel de administración de la base de datos a través de Mongo Express en `http://localhost:8081`)*
 
 ---
 
@@ -71,48 +77,15 @@ Para facilitar la corrección y prueba de todos los flujos del sistema (CRUD com
 
 ---
 
-## 💾 Arquitectura de Persistencia y Base de Datos
+## 💾 Arquitectura y Modelado NoSQL
 
-Este sistema ha sido diseñado bajo un modelo de **persistencia agnóstica**, cumpliendo con el requisito de que el motor de base de datos pueda ser sustituido de forma transparente sin modificar la lógica de negocio de la aplicación.
+A diferencia del enfoque relacional utilizado en la primera iteración del proyecto, este sistema ha sido rediseñado utilizando un modelo orientado a documentos con **MongoDB**.
 
-### Configuración Flexible
+Hemos analizado cada relación del sistema para decidir estratégicamente cuándo utilizar patrones de **Incrustación (Embedding)** y cuándo utilizar **Referencias (Referencing)**, optimizando así el rendimiento de las consultas y la integridad de los datos.
 
-La arquitectura permite alternar entre diferentes gestores de bases de datos (SQLite, MySQL, PostgreSQL) únicamente ajustando las **variables de entorno** (`.env`). Esta separación de responsabilidades asegura que el sistema sea portátil y fácil de configurar en cualquier entorno de desarrollo o producción.
-
-* **Puerto de ejecución:** Configurable mediante `PORT`.
-* **Motor de Base de Datos:** Definido mediante `DB_DIALECT`.
-* **Credenciales:** Gestión centralizada de acceso sin exponer datos sensibles en el código fuente.
-
-### Validación: Uso de Base de Datos en la Nube (Supabase)
-
-Para demostrar la capacidad de conexión a motores externos, el sistema ha sido configurado para operar con **PostgreSQL en la nube** mediante Supabase. Esto valida que la aplicación no depende de archivos locales y es capaz de integrarse con servicios de infraestructura profesionales.
-
-
-
-#### Capturas de la configuración:
-
-1. **MER de la API de ANTISOCIAL RED en Supabase:**
-
-![Configuración Supabase](assets/BD-SUPABASE-MER.png)
-
-2. **TABLAS GENERADAS de ANTISOCIAL RED en Supabase:**
-
-![Configuración Supabase](assets/BD-SUPABASE-TABLES.png)
-
-3. **Confirmación de conectividad:**
-
-![Configuración Supabase](assets/CONEXION-BD-PARAMS.png)
-
-![Configuración Supabase](assets/CONEXION-SUPABASE.png)
+👉 **[Ver justificación detallada del Modelado NoSQL](./docs/MODELADO-NOSQL.md)**
 
 ---
+## 🖥️ Consigna del TP
 
-### ¿Cómo cambiar de base de datos?
-
-Para adaptar el sistema a cualquier otro motor (por ejemplo, MySQL), el procedimiento es el siguiente:
-
-1. Asegurarse de tener instalado el driver correspondiente (por ejemplo, `mysql2` para MySQL).
-2. Actualizar el archivo `.env` con los parámetros específicos del nuevo motor (Host, Usuario, Password, Dialect). Esto es lo que modificamos con la captura *CONEXION-BD-PARAMS* y la contraseseña que pusimos a la hora de crear el proyecto, para conectarnos con SUPABASE
-3. Al reiniciar la aplicación, Sequelize detectará automáticamente el nuevo dialecto y establecerá la conexión, garantizando la transparencia solicitada en el requerimiento.
-
----
+👉 **[Ver consigna del TP](./docs/CONSIGNA.md)**

@@ -1,138 +1,92 @@
-const { Post_image } = require('../models')
+const Post = require("../models/Post")
 
 const agregarImagenAPost = async (req, res) => {
     /* #swagger.tags = ['Publicaciones']
-    #swagger.summary = 'Agregar una imagen a una publicación'
-    #swagger.parameters['id'] = {
-        in: 'path',
-        description: 'ID de la publicación',
-        required: true,
-        type: 'integer'
-    }
-    #swagger.requestBody = {
-        required: true,
-        content: {
-            "application/json": {
-                schema: { "$ref": "#/components/schemas/ImagenNueva" }
-            }
-        }
-    }
-    #swagger.responses[201] = {
-        description: 'Imagen agregada exitosamente.'
-    }
-    #swagger.responses[400] = {
-        description: 'El parametro url de la imagen es incorrecto'
-    }
-    #swagger.responses[404] = {
-        description: 'Publicacion no encontrada.'
-    }
-*/
-
+       #swagger.summary = 'Agregar una imagen a una publicación'
+    */
 
     try {
+
         const publicacion = req.publicacion
 
-        const imageUrl = `/uploads/${req.file.filename}`;
+        const imageUrl = `/uploads/${req.file.filename}`
 
-        publicacion.imagenes.push(imageUrl)
+        publicacion.imagenes.push({
+            url: imageUrl
+        })
+
         await publicacion.save()
 
-        res.status(200).json({
+        res.status(201).json({
             mensaje: "Imagen agregada correctamente",
             publicacion_id: publicacion._id,
             nueva_imagen: imageUrl
-        });
+        })
 
     } catch (error) {
-        res.status(500).json({ error: `Hubo un error a la hora de crear la imagen: ${error.message}` })
+
+        res.status(500).json({
+            error: `Hubo un error a la hora de crear la imagen: ${error.message}`
+        })
+
     }
 }
 
 const obtenerImagenesDeUnPost = async (req, res) => {
-    /* #swagger.tags = ['Publicaciones']
-    #swagger.summary = 'Obtener todas las imágenes de una publicación'
-    #swagger.parameters['id'] = {
-        in: 'path',
-        description: 'ID de la publicación',
-        required: true,
-        type: 'integer'
-    }
-    #swagger.responses[200] = {
-        description: 'Imágenes retornadas exitosamente.'
-    }
-    #swagger.responses[404] = {
-        description: 'Publicacion no encontrada.'
-    }
-    */
 
+    /* #swagger.tags = ['Publicaciones']
+       #swagger.summary = 'Obtener todas las imágenes de una publicación'
+    */
 
     try {
 
-        /*TODO: cambiar por el de mongo
-        const {id} = req.publicacion
+        const publicacion = req.publicacion
 
-        const imagenes = await Post_image.findAll({
-            attributes: ["url"],
-            where: {
-                post_id: id
-            }
+        res.status(200).json({
+            publicacion_id: publicacion._id,
+            imagenes: publicacion.imagenes
         })
-        */
-
-        //quizas esta perte cambie o no se use fijarse en la respuesta tambien
-        const return_final = {
-            publicacion_id: id,
-            imagenes: imagenes
-        }
-
-        res.status(200).json(return_final)
 
     } catch (error) {
-        res.status(500).json({ error: `Hubo un error a la hora de obtener las imagenes de un post: ${error.message}` })
+
+        res.status(500).json({
+            error: `Hubo un error a la hora de obtener las imágenes: ${error.message}`
+        })
+
     }
+
 }
 
 const eliminarImagen = async (req, res) => {
+
     /* #swagger.tags = ['Publicaciones']
-    #swagger.summary = 'Eliminar una imagen de una publicación'
-    #swagger.parameters['postId'] = {
-        in: 'path',
-        description: 'ID de la publicación',
-        required: true,
-        type: 'integer'
-    }
-    #swagger.parameters['imageId'] = {
-        in: 'path',
-        description: 'ID de la imagen',
-        required: true,
-        type: 'integer'
-    }
-    #swagger.responses[200] = {
-        description: 'Imagen eliminada exitosamente.'
-    }
-    #swagger.responses[404] = {
-        description: 'Imagen no encontrada.'
-    }
+       #swagger.summary = 'Eliminar una imagen de una publicación'
     */
 
     try {
 
-        /*TODO: cambiar por el de mongo
-        const {id} = req.imagen
+        const publicacion = req.publicacion
+        const { imageId } = req.params
 
-        await Post_image.destroy({
-            where: {
-                id: id
-            }
-        })*/
+        publicacion.imagenes = publicacion.imagenes.filter(
+            imagen => imagen._id.toString() !== imageId
+        )
 
-        res.status(200).json("Imagen eliminada con exito")
+        await publicacion.save()
+
+        res.status(200).json({
+            mensaje: "Imagen eliminada con éxito"
+        })
 
     } catch (error) {
-        res.status(500).json({ error: `Hubo un error a la hora de eliminar la imagen: ${error.message}` })
-    }
-}
 
+        res.status(500).json({
+            error: `Hubo un error a la hora de eliminar la imagen: ${error.message}`
+        })
+
+    }
+
+}
 
 module.exports = {
     agregarImagenAPost,

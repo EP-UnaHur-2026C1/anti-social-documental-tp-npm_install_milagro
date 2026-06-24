@@ -8,6 +8,19 @@ const UserSchema = new mongoose.Schema(
       trim: true,
       unique: true,
     },
+    seguidores: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: [true, "El campo user_nickname es obligatorio"],
+      trim: true
+    }],
+    seguidos: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: [true, "El campo user_nickname es obligatorio"],
+      trim: true
+    }]
+
   },
   { timestamps: true }
 );

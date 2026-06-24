@@ -7,14 +7,15 @@ const CommentSchema = new mongoose.Schema(
       required: [true, "El campo text es obligatorio"],
       trim: true
     },
-    
+
     is_visible: {
       type: Boolean,
       required: [true, "El campo is_visible es obligatorio"],
     },
 
     user_nickname: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: [true, "El campo user_nickname es obligatorio"],
       trim: true
     },

@@ -1,9 +1,21 @@
 const mongoose = require("mongoose");
 
+const PostImageSchema = new mongoose.Schema(
+  {
+    url: {
+      type: String,
+      required: [true, "El campo url es obligatorio"],
+      trim: true
+    },
+  },
+  { timestamps: true }
+);
+
 const PostSchema = new mongoose.Schema(
   {
     user_nickname: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: [true, "El campo user_nickname es obligatorio"],
       trim: true
     },
@@ -16,6 +28,11 @@ const PostSchema = new mongoose.Schema(
       type: String,
       trim: true
     },
+    imagenes: [PostImageSchema],
+    etiquetas: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Tag"
+    }]
   },
   { timestamps: true }
 );

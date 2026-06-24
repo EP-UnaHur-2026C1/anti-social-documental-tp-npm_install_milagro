@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const User = require('../models/User')
 
 const obtenerUsuarios = async (req, res) => {
     /* #swagger.tags = ['Usuarios']
@@ -10,11 +10,7 @@ const obtenerUsuarios = async (req, res) => {
 
 
     try {
-
-        /*TODO: cambiar por el de mongo
-        const usuarios = await User.findAll()
-        */
-    
+        const usuarios = await User.find()
         res.status(200).json(usuarios)
     } catch (error) {
         res.status(500).json({ error: `Hubo un error a la hora de obtener los usuarios: ${error.message}` })
@@ -73,12 +69,9 @@ const crearUsuario = async (req, res) => {
 
 
     try {
-
-        /*TODO: cambiar por el de mongo
         const usuario = await User.create({
-            nickname: req.body.nickname
-        })*/
-
+        nickname: req.body.nickname
+        })
         res.status(201).json(usuario)
 
     } catch (error) {
@@ -118,20 +111,13 @@ const editarUsuario = async (req, res) => {
 
 
     try {
-
         //nickname validado viejo
         const {nickname} = req.usuario
 
-        /*TODO: cambiar por el de mongo
-        await User.update({
-            nickname: req.body.nickname //nickname nuevo
-            }, {
-                where: {
-                    nickname: nickname //matchear con el viejo
-                }
-            }
-        );*/
-
+        await User.findOneAndUpdate(
+        { nickname: nickname },
+        { nickname: req.body.nickname }
+        )
         res.status(200).json("Usuario actualizado con exito")
 
     } catch (error) {
@@ -158,16 +144,11 @@ const eliminarUsuario = async (req, res) => {
 
 
     try {
-
         const {nickname} = req.usuario
 
-        /*TODO: cambiar por el de mongo
-        await User.destroy({
-            where: {
-                nickname: nickname
-            }
-        })*/
-
+        await User.findOneAndDelete({
+        nickname: nickname
+        })
         res.status(200).json({
             mensaje: 'Usuario eliminado exitosamente'
         })

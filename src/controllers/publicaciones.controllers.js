@@ -1,4 +1,5 @@
 const Post = require('../models/Post')
+const User = require('../models/User')
 
 const obtenerPublicaciones = async (req, res) => {
     /* #swagger.tags = ['Publicaciones']
@@ -47,7 +48,7 @@ const obtenerPublicacion = async (req, res) => {
 
 
     try {
-        const publicacion = req.publicacion
+        const publicacion = Post.findOne(req.publicacion)
 
         res.status(200).json(publicacion)
 
@@ -82,9 +83,10 @@ const crearPublicacion = async (req, res) => {
 
 
     try {
+        const user = await User.findOne({"nickname":req.body.user_nickname})
 
         const publicacion = await Post.create({
-        user_nickname: req.body.user_nickname,
+        user_nickname: user._id,
         text: req.body.text,
         description: req.body.description
         })

@@ -1,4 +1,5 @@
 const Comment = require('../models/Comment')
+const User = require('../models/User')
 
 const obtenerComentarios = async (req, res) => {
     /* #swagger.tags = ['Comentarios']
@@ -11,7 +12,7 @@ const obtenerComentarios = async (req, res) => {
     try {
         const comentarios = await Comment.find({})
         .populate("user_nickname", "nickname")
-        .populate("post_id")
+        .populate("post_id", "id")
 
         res.status(200).json(comentarios)
     } catch (error) {
@@ -121,11 +122,13 @@ const crearComentarioEnPost = async (req, res) => {
 
 
     try {
+        const user = await User.findOne({"nickname":req.body.user_nickname})
+
         const comentario = await Comment.create({
         text: req.body.text,
         is_visible: req.body.is_visible,
-        user_nickname: req.body.user_nickname,
-        post_id: req.publicacion._id
+        user_nickname: user._id,
+        post_id: req.publicacion
      })
 
       res.status(201).json(comentario)
@@ -218,47 +221,6 @@ const eliminarComentario = async (req, res) => {
     }
 }
 
-const eliminarComentarioDeUnPost = async (req, res) => {
-    /* #swagger.tags = ['Publicaciones']
-        #swagger.summary = 'Elimina un comentario del sistema por su id'
-        #swagger.parameters['postId'] = {
-            in: 'path',
-            description: 'ID de la publlicacion con el comentario a eliminar',
-            required: true,
-            type: 'integer'
-        }
-        #swagger.parameters['comentarioId'] = {
-            in: 'path',
-            description: 'ID del comentario a eliminar',
-            required: true,
-            type: 'integer'
-        }
-        #swagger.responses[200] = {
-            description: 'Comentario eliminado exitosamente.'
-        }
-        #swagger.responses[404] = {
-            description: 'Comentario no encontrado.'
-        }
-    */
-    
-
-    try {
-        const comentarioId = req.comentario._id
-        const postId = req.publicacion._id
-
-        await Comment.findOneAndDelete({
-        _id: comentarioId,
-        post_id: postId
-        })
-
-        res.status(200).json({
-            mensaje: 'Comentario eliminado'
-        })
-
-    } catch (error) {
-        res.status(500).json({ error: `Hubo un error a la hora de eliminar el comentario: ${error.message}` })
-    }
-}
 
 module.exports = {
     obtenerComentarios,
@@ -266,6 +228,5 @@ module.exports = {
     obtenerComentariosDeUnPost,
     crearComentarioEnPost,
     editarComentario,
-    eliminarComentarioDeUnPost,
     eliminarComentario
 }

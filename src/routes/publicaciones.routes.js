@@ -47,6 +47,7 @@ router.delete('/:id', validarPublicacionId, publicacionesController.eliminarPubl
 // Relación Post - Tag
 router.get('/:id/etiquetas', validarPublicacionId, postTagsController.obtenerEtiquetasDePost)
 router.post('/:postId/etiquetas/:tagId', validarPublicacionIdYEtiquetaId, postTagsController.agregarEtiqueta)
+router.delete('/:postId/etiquetas/:tagId', validarPublicacionIdYEtiquetaId, postTagsController.eliminarEtiquetaDePost)
 
 // Relacion Post - Post_Image
 router.get('/:id/imagenes', validarPublicacionId, postImagesController.obtenerImagenesDeUnPost)
@@ -57,6 +58,5 @@ router.delete('/:postId/imagenes/:imageId', validarPublicacionEImagenId, postIma
 // Relacion Post - Comment
 router.get('/:id/comentarios', validarPublicacionId, comentariosController.obtenerComentariosDeUnPost)
 router.post('/:id/comentarios', validarPublicacionId, validarComentario, validarUsuarioExistenteEnBody, comentariosController.crearComentarioEnPost)
-router.delete('/:postId/comentarios/:comentarioId',validarPublicacionYComentarioId, comentariosController.eliminarComentarioDeUnPost);
 
 module.exports = router

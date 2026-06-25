@@ -7,7 +7,7 @@ const obtenerEtiquetas = async (req, res) => {
 
     try {
 
-        const etiquetas = await Tag.find()
+        const etiquetas = await Tag.find({})
 
         res.status(200).json(etiquetas)
 

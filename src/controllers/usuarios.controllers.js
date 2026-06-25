@@ -10,7 +10,7 @@ const obtenerUsuarios = async (req, res) => {
 
 
     try {
-        const usuarios = await User.find()
+        const usuarios = await User.find({})
         res.status(200).json(usuarios)
     } catch (error) {
         res.status(500).json({ error: `Hubo un error a la hora de obtener los usuarios: ${error.message}` })

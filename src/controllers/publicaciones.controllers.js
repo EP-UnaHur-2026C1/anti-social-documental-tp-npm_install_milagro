@@ -9,7 +9,7 @@ const obtenerPublicaciones = async (req, res) => {
     */
 
     try {
-        const publicaciones = await Post.find().populate("user_nickname", "nickname")
+        const publicaciones = await Post.find({}).populate("user_nickname", "nickname")
 
         //quizas esta perte cambie o no se use fijarse en la respuesta tambien
         const publicacionesMapeadas = publicaciones.map(publi => {

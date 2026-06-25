@@ -9,7 +9,7 @@ const obtenerComentarios = async (req, res) => {
     */
 
     try {
-        const comentarios = await Comment.find()
+        const comentarios = await Comment.find({})
         .populate("user_nickname", "nickname")
         .populate("post_id")
 

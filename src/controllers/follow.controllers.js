@@ -4,7 +4,7 @@ const obtenerFollows = async (req, res) => {
 
     try {
 
-        const usuarios = await User.find()
+        const usuarios = await User.find({})
             .populate("seguidos", "nickname")
             .select("nickname seguidos")
 

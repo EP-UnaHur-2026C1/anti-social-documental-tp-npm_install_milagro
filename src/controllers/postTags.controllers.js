@@ -63,7 +63,44 @@ const obtenerEtiquetasDePost = async (req, res) => {
     }
 }
 
+const eliminarEtiquetaDePost = async (req, res) => {
+    /* #swagger.tags = ['Publicaciones']
+    #swagger.summary = 'Eliminar etiqueta por id de una publicacion por su ID'
+    */
+
+    try {
+
+        const post = req.publicacion
+        const tag = req.etiqueta
+
+        const existe = post.etiquetas.some(
+            id => id.toString() === tag._id.toString()
+        )
+
+        if (!existe) {
+            return res.status(404).json({
+                mensaje: "La etiqueta no está asociada a la publicación"
+            })
+        }
+
+        await post.etiquetas.pull(tag._id)
+        await post.save()
+
+        res.status(200).json({
+            mensaje: "Etiqueta eliminada exitosamente"
+        })
+
+    } catch (error) {
+
+        res.status(500).json({
+            error: `Hubo un error a la hora de eliminar una etiqueta al post: ${error.message}`
+        })
+
+    }
+}
+
 module.exports = {
     agregarEtiqueta,
-    obtenerEtiquetasDePost
+    obtenerEtiquetasDePost,
+    eliminarEtiquetaDePost
 }

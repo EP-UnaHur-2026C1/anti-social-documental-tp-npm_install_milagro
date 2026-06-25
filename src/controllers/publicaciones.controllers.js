@@ -48,7 +48,7 @@ const obtenerPublicacion = async (req, res) => {
 
 
     try {
-        const publicacion = Post.findOne(req.publicacion)
+        const publicacion = await Post.findById(req.publicacion).populate("user_nickname", "nickname")
 
         res.status(200).json(publicacion)
 

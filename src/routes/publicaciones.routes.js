@@ -32,7 +32,7 @@ const { validarUsuarioExistenteEnBody } = require("../middlewares/usuarios.middl
 const {
     upload,
     validarArchivoExistente
-} = require('../middlewares/upload.middleware');
+} = require('../middlewares/uploads.middlewares');
 
 const router = Router()
 

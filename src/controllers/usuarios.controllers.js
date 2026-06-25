@@ -17,7 +17,7 @@ const obtenerUsuarios = async (req, res) => {
     }
 }
 
-const obtenerUsuario = (req, res) => {
+const obtenerUsuario = async (req, res) => {
     /* #swagger.tags = ['Usuarios']
         #swagger.summary = 'Obtiene los detalles de un usuario por su ID'
         #swagger.parameters['id'] = {
@@ -36,7 +36,7 @@ const obtenerUsuario = (req, res) => {
 
 
     try {
-        const usuario = req.usuario
+        const usuario = await User.findOne(req.usuario)//req.usuario
 
         res.status(200).json(usuario)
 

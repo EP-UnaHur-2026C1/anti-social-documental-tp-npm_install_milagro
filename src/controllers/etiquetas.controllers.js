@@ -7,7 +7,7 @@ const obtenerEtiquetas = async (req, res) => {
 
     try {
 
-        const etiquetas = await Tag.find({}).select("-createdAt -updatedAt -__v -_id")
+        const etiquetas = await (await Tag.find({}).select("-createdAt -updatedAt -__v -_id")).map(e => e.name)
 
         res.status(200).json(etiquetas)
 

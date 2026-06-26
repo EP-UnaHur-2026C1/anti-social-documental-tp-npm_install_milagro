@@ -13,6 +13,15 @@ const obtenerComentarios = async (req, res) => {
         const comentarios = await Comment.find({})
         .populate("user_nickname", "nickname")
         .populate("post_id", "id")
+        .select("-createdAt -updatedAt -__v");
+
+        const comentariosMapeados = comentarios.map(c => ({
+            ...c.toObject(),
+            user_nickname: c.user_nickname.nickname,
+            post_id: c.post_id._id
+        }));
+
+        res.status(200).json(comentariosMapeados)
 
         res.status(200).json(comentarios)
     } catch (error) {
@@ -75,14 +84,15 @@ const obtenerComentariosDeUnPost = async (req, res) => {
         fechaLimite.setMonth(fechaLimite.getMonth() - mesesLimite);
 
         const comentarios = await Comment.find({
-        post_id: _id,
-        is_visible: true,
-        createdAt: { $gte: fechaLimite }
-     }).populate("user_nickname", "nickname")
+            post_id: _id,
+            is_visible: true,
+            createdAt: { $gte: fechaLimite }
+        }).populate("user_nickname", "nickname")
 
 
         //puede llegar a cambiar o no usarse esta parte
         const return_final = comentarios.map(c => ({
+            id: c._id,
             text: c.text,
             nickname: c.user_nickname?.nickname || "Usuario desconocido"
             })
@@ -122,16 +132,23 @@ const crearComentarioEnPost = async (req, res) => {
 
 
     try {
-        const user = await User.findOne({"nickname":req.body.user_nickname})
+        const user = req.usuario
 
         const comentario = await Comment.create({
-        text: req.body.text,
-        is_visible: req.body.is_visible,
-        user_nickname: user._id,
-        post_id: req.publicacion
-     })
+            text: req.body.text,
+            is_visible: req.body.is_visible,
+            user_nickname: user._id,
+            post_id: req.publicacion._id
+        })
 
-      res.status(201).json(comentario)
+        const comentarioMapeado = {
+            text: comentario.text,
+            is_visible: comentario.is_visible,
+            user_nickname: user.nickname,
+            post_id: comentario.post_id
+        }
+
+        res.status(201).json(comentarioMapeado)
 
     } catch (error) {
         res.status(500).json({ error: `Hubo un error a la hora de crear un comentario: ${error.message}` })

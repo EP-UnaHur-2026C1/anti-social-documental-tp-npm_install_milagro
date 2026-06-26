@@ -374,28 +374,6 @@
 					}
 				},
 				{
-					"name": "Eliminar Publicacion",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/publicaciones/REEMPLAZAR_POR_ID_MONGO",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"publicaciones",
-								"REEMPLAZAR_POR_ID_MONGO"
-							]
-						}
-					}
-				}
-			]
-		},
-		{
-			"name": "4. Comentarios",
-			"item": [
-				{
 					"name": "Crear Comentario en Publicacion",
 					"request": {
 						"method": "POST",
@@ -422,6 +400,46 @@
 						}
 					}
 				},
+				{
+					"name": "Obtener Comentarios de Publicación",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/publicaciones/ID_PUBLICACION/comentarios",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"publicaciones",
+								"ID_PUBLICACION",
+								"comentarios"
+							]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Publicacion",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/publicaciones/REEMPLAZAR_POR_ID_MONGO",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"publicaciones",
+								"REEMPLAZAR_POR_ID_MONGO"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "4. Comentarios",
+			"item": [
 				{
 					"name": "Obtener Todos los Comentarios",
 					"request": {

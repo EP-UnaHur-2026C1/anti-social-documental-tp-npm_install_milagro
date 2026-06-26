@@ -14,7 +14,7 @@ const obtenerPublicaciones = async (req, res) => {
         .populate("user_nickname", "nickname")
         .populate("etiquetas", "name")
         .populate("imagenes", "url")
-        .select("-createdAt -updatedAt -__v -_id")
+        .select("-createdAt -updatedAt -__v")
 
         const publicacionesMapeadas = publicaciones.map(p => ({
             ...p.toObject(),
@@ -53,7 +53,7 @@ const obtenerPublicacion = async (req, res) => {
         .populate("user_nickname", "nickname")
         .populate("etiquetas", "name")
         .populate("imagenes", "url")
-        .select("-createdAt -updatedAt -__v -_id");
+        .select("-createdAt -updatedAt -__v");
 
         
         const publicacionMapeada = {
@@ -105,6 +105,7 @@ const crearPublicacion = async (req, res) => {
         })
 
         const publicacionMapeada = {
+            id: publicacion._id,
             user_nickname: user.nickname,
             text: publicacion.text,
             description: publicacion.description,

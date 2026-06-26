@@ -7,7 +7,7 @@ const obtenerEtiquetas = async (req, res) => {
 
     try {
 
-        const etiquetas = await Tag.find({})
+        const etiquetas = await Tag.find({}).select("-createdAt -updatedAt -__v -_id")
 
         res.status(200).json(etiquetas)
 
@@ -23,7 +23,14 @@ const obtenerEtiqueta = (req, res) => {
 
     try {
 
-        res.status(200).json(req.etiqueta)
+        const etiqueta = req.etiqueta
+
+        const etiquetaMapeada = {
+            name: etiqueta.name,
+        }
+
+
+        res.status(200).json(etiquetaMapeada)
 
     } catch (error) {
         res.status(500).json({
@@ -41,7 +48,11 @@ const crearEtiqueta = async (req, res) => {
             name: req.body.name
         })
 
-        res.status(201).json(etiqueta)
+        const etiquetaMapeada = {
+            name: etiqueta.name,
+        }
+
+        res.status(201).json(etiquetaMapeada)
 
     } catch (error) {
         res.status(500).json({

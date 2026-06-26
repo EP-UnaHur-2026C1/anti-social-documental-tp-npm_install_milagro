@@ -8,7 +8,7 @@ const almacenamientoDeImagenes = multer.diskStorage({
     filename: function (req, file, cb) {
         // usamos fecha de ahora
         const nombreUnico = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, uniqueSuffix + path.extname(file.originalname));
+        cb(null, nombreUnico + path.extname(file.originalname));
     }
 });
 

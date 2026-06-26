@@ -36,7 +36,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nickname\": \"tizi\"\n}"
+							"raw": "{\n    \"nickname\": \"tizi\",\n    \"password\": \"123456\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/usuarios",
@@ -78,7 +78,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nickname\": \"tizi_modificado\"\n}"
+							"raw": "{\n    \"nickname\": \"tizi_modificado\",\n    \"password\": \"nueva123\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/usuarios/tizi",

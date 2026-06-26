@@ -10,7 +10,7 @@ const obtenerUsuarios = async (req, res) => {
 
 
     try {
-        const usuarios = await User.find({})
+        const usuarios = await User.find({}).select("-createdAt -updatedAt -__v -_id -password")
         res.status(200).json(usuarios)
     } catch (error) {
         res.status(500).json({ error: `Hubo un error a la hora de obtener los usuarios: ${error.message}` })
@@ -36,7 +36,8 @@ const obtenerUsuario = async (req, res) => {
 
 
     try {
-        const usuario = await User.findOne(req.usuario)//req.usuario
+        const usuario = await User.findOne(req.usuario)
+        .select("-createdAt -updatedAt -__v -_id -password")
 
         res.status(200).json(usuario)
 
@@ -70,10 +71,17 @@ const crearUsuario = async (req, res) => {
 
     try {
         const usuario = await User.create({
-        nickname: req.body.nickname,
-        password: req.body.password
-       })
-        res.status(201).json(usuario)
+            nickname: req.body.nickname,
+            password: req.body.password
+        })
+
+        const usuarioMapeado = {
+            nickname: usuario.nickname,
+            seguidores: usuario.seguidores,
+            seguidos: usuario.seguidos
+        }
+
+        res.status(201).json(usuarioMapeado)
 
     } catch (error) {
         res.status(500).json({ error: `Hubo un error a la hora de crear el usuario: ${error.message}` })
@@ -113,17 +121,16 @@ const editarUsuario = async (req, res) => {
 
     try {
         //nickname validado viejo
-        const {nickname} = req.usuario
 
         await User.findByIdAndUpdate(
-        req.usuario._id,
-        {
-        nickname: req.body.nickname,
-        password: req.body.password
-        }
-      )
-        res.status(200).json("Usuario actualizado con exito")
+            req.usuario._id,
+            {
+            nickname: req.body.nickname,
+            password: req.body.password
+            }
+        )
 
+        res.status(200).json("Usuario actualizado con exito")
     } catch (error) {
         res.status(500).json({ error: `Hubo un error a la hora de editar el usuario: ${error.message}` })
     }

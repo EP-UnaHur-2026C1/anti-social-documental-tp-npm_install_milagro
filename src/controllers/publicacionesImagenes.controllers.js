@@ -2,7 +2,7 @@ const Post = require("../models/Post")
 
 const agregarImagenAPost = async (req, res) => {
     /* #swagger.tags = ['Publicaciones']
-       #swagger.summary = 'Agregar una imagen a una publicación'
+        #swagger.summary = 'Agregar una imagen a una publicación'
     */
 
     try {
@@ -35,16 +35,20 @@ const agregarImagenAPost = async (req, res) => {
 const obtenerImagenesDeUnPost = async (req, res) => {
 
     /* #swagger.tags = ['Publicaciones']
-       #swagger.summary = 'Obtener todas las imágenes de una publicación'
+        #swagger.summary = 'Obtener todas las imágenes de una publicación'
     */
 
     try {
 
         const publicacion = req.publicacion
 
+        const imagenes = publicacion.imagenes.map(i => ({
+            id: i._id,
+            url: i.url
+        }))
+
         res.status(200).json({
-            publicacion_id: publicacion._id,
-            imagenes: publicacion.imagenes
+            imagenes: imagenes
         })
 
     } catch (error) {
@@ -60,7 +64,7 @@ const obtenerImagenesDeUnPost = async (req, res) => {
 const eliminarImagen = async (req, res) => {
 
     /* #swagger.tags = ['Publicaciones']
-       #swagger.summary = 'Eliminar una imagen de una publicación'
+        #swagger.summary = 'Eliminar una imagen de una publicación'
     */
 
     try {

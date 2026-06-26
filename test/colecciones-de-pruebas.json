@@ -350,25 +350,61 @@
 					"name": "Agregar Imagen a Publicacion",
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
+						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"url\": \"https://ejemplo.com/imagen_mongo.png\"\n}"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imagen",
+									"type": "file",
+									"description": "Selecciona un archivo de imagen desde tu computadora"
+								}
+							]
 						},
 						"url": {
-							"raw": "{{base_url}}/publicaciones/REEMPLAZAR_POR_ID_MONGO/imagenes",
+							"raw": "{{base_url}}/publicaciones/ID_PUBLICACION/imagenes",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"publicaciones",
-								"REEMPLAZAR_POR_ID_MONGO",
+								"ID_PUBLICACION",
 								"imagenes"
+							]
+						}
+					}
+				},{
+					"name": "Obtener Imagenes de Publicacion",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/publicaciones/ID_PUBLICACION/imagenes",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"publicaciones",
+								"ID_PUBLICACION",
+								"imagenes"
+							]
+						}
+					}
+				},{
+					"name": "Eliminar Imagen de Publicacion",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/publicaciones/ID_PUBLICACION/imagenes/ID_IMAGEN",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"publicaciones",
+								"ID_PUBLICACION",
+								"imagenes",
+								"ID_IMAGEN"
 							]
 						}
 					}

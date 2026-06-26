@@ -10,19 +10,18 @@ const obtenerPublicaciones = async (req, res) => {
     */
 
     try {
-        const publicaciones = await Post.find({}).populate("user_nickname", "nickname")
+        const publicaciones = await Post.find({})
+        .populate("user_nickname", "nickname")
 
-        //quizas esta perte cambie o no se use fijarse en la respuesta tambien
-        const publicacionesMapeadas = publicaciones.map(publi => {
-            return {
-                id: publi.id ,
-                text: publi.text,
-                description: publi.description,
-                user_nickname: publi.user_nickname?.nickname || publi.user_nickname
-            }
-        })
+        const publicacionesMapeada = publicaciones.map(p => ({
+            user_nickname: p.user_nickname.nickname,
+            text: p.text,
+            description: p.description,
+            imagenes: p.imagenes,
+            etiquetas: p.etiquetas
+        }))
 
-        res.status(200).json(publicacionesMapeadas)
+        res.status(200).json(publicacionesMapeada)
 
     } catch (error) {
         res.status(500).json({ error: `Hubo un error a la hora de obtener las publicaciones: ${error.message}` })
@@ -48,9 +47,18 @@ const obtenerPublicacion = async (req, res) => {
 
 
     try {
-        const publicacion = await Post.findById(req.publicacion).populate("user_nickname", "nickname")
+        const publicacion = await Post.findById(req.publicacion)
+        .populate("user_nickname", "nickname")
+        
+        const publicacionMapeada = {
+            user_nickname: publicacion.user_nickname.nickname,
+            text: publicacion.text,
+            description: publicacion.description,
+            imagenes: publicacion.imagenes,
+            etiquetas: publicacion.etiquetas
+        }
 
-        res.status(200).json(publicacion)
+        res.status(200).json(publicacionMapeada)
 
     } catch (error) {
         res.status(500).json({ error: `Hubo un error a la hora de obtener la publicacion por ID: ${error.message}` })
@@ -83,15 +91,23 @@ const crearPublicacion = async (req, res) => {
 
 
     try {
-        const user = await User.findOne({"nickname":req.body.user_nickname})
+        const user = req.usuario
 
         const publicacion = await Post.create({
-        user_nickname: user._id,
-        text: req.body.text,
-        description: req.body.description
+            user_nickname: user._id,
+            text: req.body.text,
+            description: req.body.description
         })
 
-        res.status(201).json(publicacion)
+        const publicacionMapeada = {
+            user_nickname: user.nickname,
+            text: publicacion.text,
+            description: publicacion.description,
+            imagenes: publicacion.imagenes,
+            etiquetas: publicacion.etiquetas
+        }
+
+        res.status(201).json(publicacionMapeada)
 
     } catch (error) {
         res.status(500).json({ error: `Hubo un error a la hora de crear una publicacion: ${error.message}` })
@@ -133,11 +149,11 @@ const editarPublicacion = async (req, res) => {
         const { _id } = req.publicacion
 
         await Post.findByIdAndUpdate(_id,
-       {
-         text: req.body.text,
-         description: req.body.description
-       }
-       )
+            {
+                text: req.body.text,
+                description: req.body.description
+            }
+        )
 
         res.status(200).json("Publicacion actualizada con exito")
 

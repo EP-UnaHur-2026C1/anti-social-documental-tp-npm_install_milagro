@@ -52,6 +52,8 @@ const validarUsuarioExistenteEnBody = async (req, res, next) => {
             })
         }
 
+        req.usuario = usuario
+
         next()
 
     } catch (error) {

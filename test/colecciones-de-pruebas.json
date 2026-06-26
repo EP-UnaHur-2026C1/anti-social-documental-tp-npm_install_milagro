@@ -324,6 +324,29 @@
 					}
 				},
 				{
+					"name": "Obtener Etiquetas de Publicación",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/publicaciones/ID_PUBLICACION/etiquetas",
+							"host": ["{{base_url}}"],
+							"path": ["publicaciones", "ID_PUBLICACION", "etiquetas"]
+						}
+					}
+				},{
+					"name": "Eliminar Etiqueta de Publicación",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/publicaciones/ID_PUBLICACION/etiquetas/ID_ETIQUETA",
+							"host": ["{{base_url}}"],
+							"path": ["publicaciones", "ID_PUBLICACION", "etiquetas", "ID_ETIQUETA"]
+						}
+					}
+				},
+				{
 					"name": "Agregar Imagen a Publicacion",
 					"request": {
 						"method": "POST",

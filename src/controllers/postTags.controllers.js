@@ -45,12 +45,11 @@ const obtenerEtiquetasDePost = async (req, res) => {
     try {
 
         const post = await Post.findById(req.publicacion._id)
-            .populate("etiquetas", "name")
+        .populate("etiquetas", "name")
 
         const etiquetas = post.etiquetas.map(tag => tag.name)
 
         res.status(200).json({
-            publicacion_id: post._id,
             etiquetas: etiquetas
         })
 

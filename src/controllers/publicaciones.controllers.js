@@ -12,16 +12,18 @@ const obtenerPublicaciones = async (req, res) => {
     try {
         const publicaciones = await Post.find({})
         .populate("user_nickname", "nickname")
+        .populate("etiquetas", "name")
+        .populate("imagenes", "url")
+        .select("-createdAt -updatedAt -__v -_id")
 
-        const publicacionesMapeada = publicaciones.map(p => ({
+        const publicacionesMapeadas = publicaciones.map(p => ({
+            ...p.toObject(),
             user_nickname: p.user_nickname.nickname,
-            text: p.text,
-            description: p.description,
-            imagenes: p.imagenes,
-            etiquetas: p.etiquetas
-        }))
+            imagenes: p.imagenes.map(e => e.url),
+            etiquetas: p.etiquetas.map(e => e.name)
+        }));
 
-        res.status(200).json(publicacionesMapeada)
+        res.status(200).json(publicacionesMapeadas)
 
     } catch (error) {
         res.status(500).json({ error: `Hubo un error a la hora de obtener las publicaciones: ${error.message}` })
@@ -49,14 +51,17 @@ const obtenerPublicacion = async (req, res) => {
     try {
         const publicacion = await Post.findById(req.publicacion)
         .populate("user_nickname", "nickname")
+        .populate("etiquetas", "name")
+        .populate("imagenes", "url")
+        .select("-createdAt -updatedAt -__v -_id");
+
         
         const publicacionMapeada = {
+            ...publicacion.toObject(),
             user_nickname: publicacion.user_nickname.nickname,
-            text: publicacion.text,
-            description: publicacion.description,
-            imagenes: publicacion.imagenes,
-            etiquetas: publicacion.etiquetas
-        }
+            imagenes: publicacion.imagenes.map(e => e.url),
+            etiquetas: publicacion.etiquetas.map(e => e.name)
+        };
 
         res.status(200).json(publicacionMapeada)
 

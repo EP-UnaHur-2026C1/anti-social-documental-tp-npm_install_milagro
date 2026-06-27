@@ -99,6 +99,9 @@
           "200": {
             "description": "Publicacion encontrada exitosamente."
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "404": {
             "description": "Publicacion no encontrada."
           },
@@ -170,6 +173,9 @@
           "200": {
             "description": "Publicacion eliminada exitosamente."
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "404": {
             "description": "Publicacion no encontrada."
           },
@@ -194,32 +200,17 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "postId",
-            "in": "path",
-            "description": "ID de la publicacion",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "tagId",
-            "in": "path",
-            "description": "ID de la etiqueta",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Etiqueta asociada exitosamente."
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
-            "description": "Publicacion o Etiqueta no encontrada."
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -241,8 +232,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "ID de la publicacion"
+            }
           },
           {
             "name": "tagId",
@@ -250,16 +240,57 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "ID de la etiqueta"
+            }
           }
         ],
         "responses": {
           "201": {
-            "description": "Etiqueta asociada exitosamente."
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
-            "description": "Publicacion o Etiqueta no encontrada."
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Publicaciones"
+        ],
+        "summary": "Eliminar etiqueta por id de una publicacion por su ID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tagId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -281,16 +312,18 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "ID de la publicación"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Imágenes retornadas exitosamente."
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
-            "description": "Publicacion no encontrada."
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -310,32 +343,21 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "ID de la publicación"
+            }
           }
         ],
         "responses": {
           "201": {
-            "description": "Imagen agregada exitosamente."
+            "description": "Created"
           },
           "400": {
-            "description": "El parametro url de la imagen es incorrecto"
+            "description": "Bad Request"
           },
           "404": {
-            "description": "Publicacion no encontrada."
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ImagenNueva"
-              }
-            }
           }
         }
       }
@@ -354,8 +376,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "ID de la publicación"
+            }
           },
           {
             "name": "imageId",
@@ -363,16 +384,18 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "ID de la imagen"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Imagen eliminada exitosamente."
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
-            "description": "Imagen no encontrada."
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -401,6 +424,9 @@
         "responses": {
           "200": {
             "description": "Comentarios retornados exitosamente."
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
             "description": "Publicación no encontrada."
@@ -449,46 +475,6 @@
                 "$ref": "#/components/schemas/ComentarioNuevo"
               }
             }
-          }
-        }
-      }
-    },
-    "/publicaciones/{postId}/comentarios/{comentarioId}": {
-      "delete": {
-        "tags": [
-          "Publicaciones"
-        ],
-        "summary": "Elimina un comentario del sistema por su id",
-        "description": "",
-        "parameters": [
-          {
-            "name": "postId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "ID de la publlicacion con el comentario a eliminar"
-          },
-          {
-            "name": "comentarioId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "ID del comentario a eliminar"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Comentario eliminado exitosamente."
-          },
-          "404": {
-            "description": "Comentario no encontrado."
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       }
@@ -649,7 +635,7 @@
         "description": "",
         "responses": {
           "200": {
-            "description": "Etiquetas retornadas exitosamente."
+            "description": "OK"
           },
           "500": {
             "description": "Internal Server Error"
@@ -660,27 +646,16 @@
         "tags": [
           "Etiquetas"
         ],
-        "summary": "Crea una nueva etiquetas en el sistema",
         "description": "",
         "responses": {
           "201": {
-            "description": "Etiqueta creada exitosamente."
+            "description": "Created"
           },
           "400": {
-            "description": "El campo name es obligatorio o está vacío."
+            "description": "Bad Request"
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EtiquetaNueva"
-              }
-            }
           }
         }
       }
@@ -690,7 +665,6 @@
         "tags": [
           "Etiquetas"
         ],
-        "summary": "Obtiene los detalles de una etiqueta por su ID",
         "description": "",
         "parameters": [
           {
@@ -699,16 +673,18 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "ID de la etiqueta a buscar"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Etiqueta encontrado exitosamente."
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
-            "description": "Etiqueta no encontrado."
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -719,7 +695,6 @@
         "tags": [
           "Etiquetas"
         ],
-        "summary": "Editar los datos de una etiqueta por su ID",
         "description": "",
         "parameters": [
           {
@@ -728,32 +703,21 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "ID de la etiqueta a buscar"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Etiqueta modificada con exito."
+            "description": "OK"
           },
           "400": {
-            "description": "El campo name es obligatorio o está vacío."
+            "description": "Bad Request"
           },
           "404": {
-            "description": "Etiqueta no encontrada en la base de datos."
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EtiquetaNueva"
-              }
-            }
           }
         }
       },
@@ -761,7 +725,6 @@
         "tags": [
           "Etiquetas"
         ],
-        "summary": "Elimina una etiqueta del sistema por su id",
         "description": "",
         "parameters": [
           {
@@ -770,16 +733,18 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "ID de la etiqueta a eliminar"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Etiqueta eliminado exitosamente."
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
-            "description": "Etiqueta no encontrado."
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -825,6 +790,9 @@
         "responses": {
           "200": {
             "description": "Comentario encontrado exitosamente."
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
             "description": "Comentario no encontrado."
@@ -897,6 +865,9 @@
           "200": {
             "description": "Comentario eliminado exitosamente."
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "404": {
             "description": "Comentario no encontrado."
           },
@@ -911,14 +882,13 @@
         "tags": [
           "Follows"
         ],
-        "summary": "Obtener todos los seguimientos registrados en el sistema",
         "description": "",
         "responses": {
           "200": {
-            "description": "Lista de todos los seguimientos obtenida exitosamente."
+            "description": "Lista de follows obtenida correctamente."
           },
           "500": {
-            "description": "Error interno del servidor."
+            "description": "Internal Server Error"
           }
         }
       }
@@ -928,7 +898,7 @@
         "tags": [
           "Follows"
         ],
-        "summary": "Obtener lista de usuarios a los que sigue un usuario específico",
+        "summary": "Obtener los usuarios que sigue un usuario específico",
         "description": "",
         "parameters": [
           {
@@ -938,15 +908,15 @@
             "schema": {
               "type": "string"
             },
-            "description": "Nickname del usuario seguidor"
+            "description": "Nickname del usuario"
           }
         ],
         "responses": {
           "200": {
-            "description": "Lista de seguidos obtenida exitosamente."
+            "description": "Follows obtenidos correctamente."
           },
           "404": {
-            "description": "Usuario inexistente."
+            "description": "Usuario no encontrado."
           },
           "500": {
             "description": "Internal Server Error"
@@ -957,7 +927,7 @@
         "tags": [
           "Follows"
         ],
-        "summary": "Hacer que un usuario siga a otro",
+        "summary": "Seguir a un usuario",
         "description": "",
         "parameters": [
           {
@@ -967,18 +937,18 @@
             "schema": {
               "type": "string"
             },
-            "description": "Nickname del usuario que va a seguir a otro (seguidor)"
+            "description": "Nickname del usuario que va a seguir a otro"
           }
         ],
         "responses": {
           "201": {
-            "description": "Seguimiento creado exitosamente."
+            "description": "Seguimiento creado correctamente."
           },
           "400": {
-            "description": "El body no cumple con los parámetros solicitados."
+            "description": "El body no es válido o el seguimiento ya existe."
           },
           "404": {
-            "description": "Usuario a seguir inexistente."
+            "description": "Usuario o seguido no encontrado."
           },
           "500": {
             "description": "Internal Server Error"
@@ -989,16 +959,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "followed_user_nickname": {
-                    "type": "string",
-                    "example": "amigo123"
-                  }
-                },
-                "required": [
-                  "followed_user_nickname"
-                ]
+                "$ref": "#/components/schemas/FollowNuevo"
               }
             }
           }
@@ -1018,18 +979,18 @@
             "schema": {
               "type": "string"
             },
-            "description": "Nickname del usuario que quiere dejar de seguir a otro"
+            "description": "Nickname del usuario que va a dejar de seguir a otro"
           }
         ],
         "responses": {
-          "201": {
-            "description": "Seguimiento eliminado exitosamente."
+          "200": {
+            "description": "Seguimiento eliminado correctamente."
           },
           "400": {
             "description": "No existe el seguimiento para eliminar."
           },
           "404": {
-            "description": "Usuario a seguir inexistente."
+            "description": "Usuario o seguido no encontrado."
           },
           "500": {
             "description": "Internal Server Error"
@@ -1040,16 +1001,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "followed_user_nickname": {
-                    "type": "string",
-                    "example": "amigo123"
-                  }
-                },
-                "required": [
-                  "followed_user_nickname"
-                ]
+                "$ref": "#/components/schemas/FollowNuevo"
               }
             }
           }
@@ -1065,10 +1017,15 @@
           "nickname": {
             "type": "string",
             "example": "user_123"
+          },
+          "password": {
+            "type": "string",
+            "example": "123456"
           }
         },
         "required": [
-          "nickname"
+          "nickname",
+          "password"
         ]
       },
       "EtiquetaNueva": {
@@ -1116,8 +1073,8 @@
             "example": true
           },
           "user_nickname": {
-            "type": "number",
-            "example": 1
+            "type": "string",
+            "example": "tizi"
           }
         },
         "required": [
@@ -1136,6 +1093,18 @@
         },
         "required": [
           "url"
+        ]
+      },
+      "FollowNuevo": {
+        "type": "object",
+        "properties": {
+          "followed_user_nickname": {
+            "type": "string",
+            "example": "amigo_123"
+          }
+        },
+        "required": [
+          "followed_user_nickname"
         ]
       }
     }

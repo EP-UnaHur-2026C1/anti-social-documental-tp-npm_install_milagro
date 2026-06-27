@@ -27,7 +27,7 @@ const validarComentarioId = async (req, res, next) => {
             })
         }
 
-        const comentario = await Comment.findById(id).select("-createdAt -updatedAt -__v");
+        const comentario = await Comment.findById(id)
 
         if (!comentario) {
             return res.status(404).json({
@@ -35,7 +35,11 @@ const validarComentarioId = async (req, res, next) => {
             })
         }
 
-        req.comentario = comentario
+        const comentarioFormateado = comentario.populate("user_nickname", "nickname")
+        .populate("post_id", "id")
+        .select("-createdAt -updatedAt -__v");
+
+        req.comentario = comentarioFormateado
 
         next()
 

@@ -23,10 +23,12 @@ const doc = {
 
 
     // Schemas que se usan en la docu de la API, en los controllers
+    // Schemas que se usan en la docu de la API, en los controllers
     components: {
         schemas: {
             UsuarioNuevo: {
-                $nickname: "user_123"
+                $nickname: "user_123",
+                $password: "123456" // Agregado: ahora es obligatorio
             },
             EtiquetaNueva: {
                 $name: "Entretenimiento"
@@ -39,10 +41,13 @@ const doc = {
             ComentarioNuevo: {
                 $text: "Este es un comentario",
                 $is_visible: true,
-                $user_nickname: 1
+                $user_nickname: "tizi" // Corregido: ahora es string
             },
             ImagenNueva: {
                 $url: "https://ejemplo.com/tu-imagen.png"
+            },
+            FollowNuevo: { // Agregado: Esquema para el body de follows
+                $followed_user_nickname: "amigo_123"
             }
         }
     }

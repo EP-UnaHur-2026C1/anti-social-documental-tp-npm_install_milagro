@@ -1,6 +1,12 @@
 const User = require("../models/User")
 
 const obtenerFollows = async (req, res) => {
+    /* #swagger.tags = ['Follows']
+        swagger.summary = 'Obtener la lista global de usuarios con sus seguidos'
+        #swagger.responses[200] = {
+            description: 'Lista de follows obtenida correctamente.'
+        }
+    */
 
     try {
 
@@ -21,6 +27,21 @@ const obtenerFollows = async (req, res) => {
 }
 
 const obtenerFollowsDeUser = async (req, res) => {
+    /* #swagger.tags = ['Follows']
+        #swagger.summary = 'Obtener los usuarios que sigue un usuario específico'
+        #swagger.parameters['user'] = {
+            in: 'path',
+            description: 'Nickname del usuario',
+            required: true,
+            type: 'string'
+        }
+        #swagger.responses[200] = {
+            description: 'Follows obtenidos correctamente.'
+        }
+        #swagger.responses[404] = {
+            description: 'Usuario no encontrado.'
+        }
+    */
 
     try {
 
@@ -39,6 +60,34 @@ const obtenerFollowsDeUser = async (req, res) => {
 }
 
 const crearFollow = async (req, res) => {
+    /* #swagger.tags = ['Follows']
+        #swagger.summary = 'Seguir a un usuario'
+        #swagger.parameters['user'] = {
+            in: 'path',
+            description: 'Nickname del usuario que va a seguir a otro',
+            required: true,
+            type: 'string'
+        }
+        #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/components/schemas/FollowNuevo"
+                    }
+                }
+            }
+        }
+        #swagger.responses[201] = {
+            description: 'Seguimiento creado correctamente.'
+        }
+        #swagger.responses[400] = {
+            description: 'El body no es válido o el seguimiento ya existe.'
+        }
+        #swagger.responses[404] = {
+            description: 'Usuario o seguido no encontrado.'
+        }
+    */
 
     try {
 
@@ -78,6 +127,35 @@ const crearFollow = async (req, res) => {
 }
 
 const eliminarFollow = async (req, res) => {
+    /* #swagger.tags = ['Follows']
+        #swagger.summary = 'Dejar de seguir a un usuario'
+        #swagger.parameters['user'] = {
+            in: 'path',
+            description: 'Nickname del usuario que va a dejar de seguir a otro',
+            required: true,
+            type: 'string'
+        }
+        #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/components/schemas/FollowNuevo"
+                    }
+                }
+            }
+        }
+        #swagger.responses[200] = {
+            description: 'Seguimiento eliminado correctamente.'
+        }
+        #swagger.responses[400] = {
+            description: 'No existe el seguimiento para eliminar.'
+        }
+        #swagger.responses[404] = {
+            description: 'Usuario o seguido no encontrado.'
+        }
+    */
+
 
     try {
 

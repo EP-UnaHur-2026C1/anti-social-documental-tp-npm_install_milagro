@@ -35,9 +35,16 @@ const validarComentarioId = async (req, res, next) => {
             })
         }
 
-        const comentarioFormateado = comentario.populate("user_nickname", "nickname")
-        .populate("post_id", "id")
-        .select("-createdAt -updatedAt -__v");
+        await comentario.populate("user_nickname", "nickname");
+        await comentario.populate("post_id", "_id");
+        
+        const comentarioFormateado = {
+            _id: comentario._id,
+            text: comentario.text,
+            is_visible: comentario.is_visible,
+            user_nickname: comentario.user_nickname,
+            post_id: comentario.post_id
+        };
 
         req.comentario = comentarioFormateado
 

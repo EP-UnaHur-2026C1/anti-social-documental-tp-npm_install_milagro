@@ -63,8 +63,34 @@ const validarUsuarioExistenteEnBody = async (req, res, next) => {
     }
 }
 
+const validarContraseniaDeUsuario = async (req, res, next) => {
+    try {
+        const usuario = req.usuario
+
+        if (!usuario) {
+            return res.status(404).json({
+                mensaje: "el usuario no existe en la base de datos"
+            })
+        }
+
+        if (!usuario.password !== req.body.password) {
+            return res.status(403).json({
+                mensaje: "La contraseña es incorrecta"
+            })
+        }
+
+        next()
+
+    } catch (error) {
+        return res.status(500).json({
+            error: error.message
+        })
+    }
+}
+
 module.exports = {
     validarUsuarioId,
     validarUsuarioSchema,
-    validarUsuarioExistenteEnBody
+    validarUsuarioExistenteEnBody,
+    validarContraseniaDeUsuario
 }

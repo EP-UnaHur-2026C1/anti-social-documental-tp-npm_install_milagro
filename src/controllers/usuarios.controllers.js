@@ -88,6 +88,63 @@ const crearUsuario = async (req, res) => {
     }
 }
 
+const loginUsuario = async (req, res) => {
+    /* #swagger.tags = ['Usuarios']
+    #swagger.summary = 'Loguea un usuario en el sistema'
+    
+    #swagger.requestBody = {
+        required: true,
+        content: {
+            "application/json": {
+                schema: {
+                    type: "object",
+                    properties: {
+                        nickname: { type: "string" },
+                        password: { type: "string" }
+                    },
+                    required: ["nickname", "password"]
+                }
+            }
+        }
+    }
+
+    #swagger.responses[200] = {
+        description: 'Login exitoso. Retorna datos del usuario.',
+        schema: {
+            id: "string",
+            nickname: "string",
+            seguidores: ["array de ids"],
+            seguidos: ["array de ids"]
+        }
+    }
+
+    #swagger.responses[401] = {
+        description: 'Contraseña incorrecta.'
+    }
+
+    #swagger.responses[404] = {
+        description: 'El usuario no existe.'
+    }
+    */
+
+
+    try {
+        const usuario = req.usuario
+
+        const usuarioMapeado = {
+            id: usuario._id,
+            nickname: usuario.nickname,
+            seguidores: usuario.seguidores,
+            seguidos: usuario.seguidos
+        }
+
+        res.status(200).json(usuarioMapeado)
+
+    } catch (error) {
+        res.status(500).json({ error: `Hubo un error a la hora de crear el usuario: ${error.message}` })
+    }
+}
+
 const editarUsuario = async (req, res) => {
     /* #swagger.tags = ['Usuarios']
         #swagger.summary = 'Editar los datos de un usuario por su ID'
@@ -173,6 +230,7 @@ module.exports = {
     obtenerUsuarios,
     obtenerUsuario,
     crearUsuario,
+    loginUsuario,
     editarUsuario,
     eliminarUsuario
 }

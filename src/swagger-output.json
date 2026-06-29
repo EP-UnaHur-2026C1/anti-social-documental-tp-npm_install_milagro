@@ -626,6 +626,131 @@
         }
       }
     },
+    "/usuarios/login": {
+      "post": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Loguea un usuario en el sistema",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Login exitoso. Retorna datos del usuario.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "nickname": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "seguidores": {
+                      "type": "array",
+                      "example": [
+                        "array de ids"
+                      ],
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "seguidos": {
+                      "type": "array",
+                      "example": [
+                        "array de ids"
+                      ],
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "nickname": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "seguidores": {
+                      "type": "array",
+                      "example": [
+                        "array de ids"
+                      ],
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "seguidos": {
+                      "type": "array",
+                      "example": [
+                        "array de ids"
+                      ],
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Contraseña incorrecta."
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "El usuario no existe."
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nickname": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "nickname",
+                  "password"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
     "/etiquetas/": {
       "get": {
         "tags": [
@@ -1026,7 +1151,10 @@
         "required": [
           "nickname",
           "password"
-        ]
+        ],
+        "xml": {
+          "name": "UsuarioNuevo"
+        }
       },
       "EtiquetaNueva": {
         "type": "object",
@@ -1038,7 +1166,10 @@
         },
         "required": [
           "name"
-        ]
+        ],
+        "xml": {
+          "name": "EtiquetaNueva"
+        }
       },
       "PublicacionNueva": {
         "type": "object",
@@ -1059,7 +1190,10 @@
         "required": [
           "user_nickname",
           "text"
-        ]
+        ],
+        "xml": {
+          "name": "PublicacionNueva"
+        }
       },
       "ComentarioNuevo": {
         "type": "object",
@@ -1081,7 +1215,10 @@
           "text",
           "is_visible",
           "user_nickname"
-        ]
+        ],
+        "xml": {
+          "name": "ComentarioNuevo"
+        }
       },
       "ImagenNueva": {
         "type": "object",
@@ -1093,7 +1230,10 @@
         },
         "required": [
           "url"
-        ]
+        ],
+        "xml": {
+          "name": "ImagenNueva"
+        }
       },
       "FollowNuevo": {
         "type": "object",
@@ -1105,7 +1245,10 @@
         },
         "required": [
           "followed_user_nickname"
-        ]
+        ],
+        "xml": {
+          "name": "FollowNuevo"
+        }
       }
     }
   }

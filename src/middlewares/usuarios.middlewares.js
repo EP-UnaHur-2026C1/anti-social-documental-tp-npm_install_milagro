@@ -6,7 +6,7 @@ const validarUsuarioSchema = (req, res, next) => {
 
     if (error) {
         return res.status(400).json({
-            error: `El body no cumple con los parametros solicitados: ${error.details[0].message}`
+            mensaje: `El body no cumple con los parametros solicitados: ${error.details[0].message}`
         })
     }
 

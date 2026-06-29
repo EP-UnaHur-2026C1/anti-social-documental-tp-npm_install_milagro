@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-
+const cors = require('cors');
 const conectarDB = require("./config/db");
 const { conectarRedis } = require("./config/redis");
 
@@ -11,6 +11,11 @@ require("dotenv").config();
 
 const PORT = process.env.PORT || 3000;
 
+app.use(cors({
+    origin: 'http://localhost:5173', // front
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 app.use(express.json());
 

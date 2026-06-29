@@ -41,14 +41,18 @@ const validarUsuarioId = async (req, res, next) => {
 const validarUsuarioExistenteEnBody = async (req, res, next) => {
     try {
         const { user_nickname } = req.body
+        const { nickname } = req.body
+
+        const nombre =  user_nickname ? user_nickname : nickname
+        console.log(nombre)
 
         const usuario = await User.findOne({
-            nickname: user_nickname
+            nickname: nombre
         })
 
         if (!usuario) {
             return res.status(404).json({
-                mensaje: "No se puede crear la publicación: el usuario no existe en la base de datos"
+                mensaje: " El usuario no existe en la base de datos"
             })
         }
 
@@ -67,13 +71,14 @@ const validarContraseniaDeUsuario = async (req, res, next) => {
     try {
         const usuario = req.usuario
 
+        console.log(usuario.password, "<>", req.body.password)
         if (!usuario) {
             return res.status(404).json({
                 mensaje: "el usuario no existe en la base de datos"
             })
         }
 
-        if (!usuario.password !== req.body.password) {
+        if (usuario.password !== req.body.password) {
             return res.status(403).json({
                 mensaje: "La contraseña es incorrecta"
             })
